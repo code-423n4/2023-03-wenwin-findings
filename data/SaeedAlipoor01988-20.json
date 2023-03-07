@@ -1,0 +1,8 @@
+{
+  "contest": 218,
+  "handle": "SaeedAlipoor01988",
+  "risk": "2",
+  "title": "No maximum tickets per call to Lottery.sol.buyTickets and Possible DOS (out-of-gas) on loop.",
+  "issueId": 20,
+  "issueUrl": "https://github.com/code-423n4/2023-03-wenwin-findings/issues/20"
+}
