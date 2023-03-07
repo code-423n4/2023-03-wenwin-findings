@@ -1,0 +1,8 @@
+{
+  "contest": 218,
+  "handle": "SaeedAlipoor01988",
+  "risk": "2",
+  "title": "Use safeMint instead of mint for ERC721",
+  "issueId": 19,
+  "issueUrl": "https://github.com/code-423n4/2023-03-wenwin-findings/issues/19"
+}
