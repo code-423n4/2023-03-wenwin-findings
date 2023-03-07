@@ -1,0 +1,8 @@
+{
+  "contest": 218,
+  "handle": "chaduke",
+  "risk": "2",
+  "title": "reconstructTicket(randomnumber, 7, 35) will tend to shy away from 34, 33, 32, 31, 30, 29, 28",
+  "issueId": 41,
+  "issueUrl": "https://github.com/code-423n4/2023-03-wenwin-findings/issues/41"
+}
