@@ -1,0 +1,8 @@
+{
+  "contest": 218,
+  "handle": "SaeedAlipoor01988",
+  "risk": "2",
+  "title": "If the user calls Lottery.sol.buyTickets function from another contract, Ticket will get registered for the contract and not the user.",
+  "issueId": 18,
+  "issueUrl": "https://github.com/code-423n4/2023-03-wenwin-findings/issues/18"
+}
