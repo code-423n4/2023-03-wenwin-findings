@@ -50,3 +50,7 @@ if (winTier == 0 || winTier > selectionSize) {
 uint256 mask = uint256(type(uint16).max) << (winTier * 16);
 uint256 extracted = (nonJackpotFixedRewards & mask) >> (winTier * 16);
 return extracted * (10 ** (IERC20Metadata(address(rewardToken)).decimals() - 1));
+```
+
+## Players should not be able to claim winning tickets until the draw is finalised
+`requireFinishedDraw()` must be called inside `claimWinningTicket()` to prevent users from claiming winning tickets before the draw is finalised.
