@@ -1,0 +1,8 @@
+{
+  "contest": 218,
+  "handle": "SunSec",
+  "risk": "2",
+  "title": "Incorrect use balanceOf in reward calculation",
+  "issueId": 71,
+  "issueUrl": "https://github.com/code-423n4/2023-03-wenwin-findings/issues/71"
+}
