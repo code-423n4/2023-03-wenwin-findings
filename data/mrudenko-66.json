@@ -1,0 +1,8 @@
+{
+  "contest": 218,
+  "handle": "mrudenko",
+  "risk": "2",
+  "title": "PercentageMath.getPercentageInt is used is some place with one parametr",
+  "issueId": 66,
+  "issueUrl": "https://github.com/code-423n4/2023-03-wenwin-findings/issues/66"
+}
