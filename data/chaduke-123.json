@@ -1,0 +1,8 @@
+{
+  "contest": 218,
+  "handle": "chaduke",
+  "risk": "2",
+  "title": "A malicious/compromised owner can set/switch to a malicious IRNSource and pick a winning ticket.",
+  "issueId": 123,
+  "issueUrl": "https://github.com/code-423n4/2023-03-wenwin-findings/issues/123"
+}
