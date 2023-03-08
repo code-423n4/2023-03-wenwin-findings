@@ -1,0 +1,8 @@
+{
+  "contest": 218,
+  "handle": "bugradar",
+  "risk": "2",
+  "title": "Ticket ERC721 contract doesn't have a separate \"ownable\". Being \"ownable\" is important for secondary nft markets.  Collides with security requirement for \"RNSourceController\" ownable.",
+  "issueId": 130,
+  "issueUrl": "https://github.com/code-423n4/2023-03-wenwin-findings/issues/130"
+}
