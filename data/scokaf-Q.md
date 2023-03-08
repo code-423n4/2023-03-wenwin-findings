@@ -166,3 +166,32 @@ import {FixedPointMathLib} from "solmate/utils/FixedPointMathLib.sol";
 import {ERC1155, ERC1155TokenReceiver} from "solmate/tokens/ERC1155.sol";
 import {toWadUnsafe, toDaysWadUnsafe} from "solmate/utils/SignedWadMath.sol";
 
+# 4: LOCK PRAGMAS TO SPECIFIC COMPILER VERSION
+
+Vulnerability details
+
+## Context:
+
+Pragma statements can be allowed to float when a contract is intended for consumption by other developers, as in the case with contracts in a library or EthPM package. Otherwise, the developer would need to manually update the pragma in order to compile locally.
+
+For reference, see https://swcregistry.io/docs/SWC-103
+
+
+## Proof of Concept
+
+https://github.com/code-423n4/2023-03-wenwin/blob/91b89482aaedf8b8feb73c771d11c257eed997e8/src/VRFv2RNSource.sol#L3 
+
+https://github.com/code-423n4/2023-03-wenwin/blob/91b89482aaedf8b8feb73c771d11c257eed997e8/src/staking/StakedTokenLock.sol#L3 
+
+https://github.com/code-423n4/2023-03-wenwin/blob/91b89482aaedf8b8feb73c771d11c257eed997e8/src/interfaces/IVRFv2RNSource.sol#L3 
+
+
+## Tools Used
+
+Manual Analysis
+
+### Recommended Mitigation Steps
+
+Ethereum Smart Contract Best Practices - Lock pragmas to specific compiler versions. 
+
+For reference, see https://consensys.github.io/smart-contract-best-practices/development-recommendations/solidity-specific/locking-pragmas/
