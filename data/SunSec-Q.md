@@ -30,6 +30,8 @@ buySameTickets(currentDraw, uint120(0x0F), address(0), 270_000);
 Encountered 1 failing test in test/ReferralSystemBase.sol:ReferralSystemBase
 [FAIL. Reason: EvmError: OutOfGas] testAddTicket() (gas: 9223372036854754743)
 ```
+## Tools Used
+Manual
 ## Recommended Mitigation Steps
 Add maximum value check for drawIds and tickets.
 
