@@ -1,0 +1,8 @@
+{
+  "contest": 218,
+  "handle": "0xtr3",
+  "risk": "2",
+  "title": "SWC-101 Integer Overflow StakedTokenLock.sol deposit() testDepositOwnerOnly()",
+  "issueId": 137,
+  "issueUrl": "https://github.com/code-423n4/2023-03-wenwin-findings/issues/137"
+}
