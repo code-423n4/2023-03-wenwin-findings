@@ -7,9 +7,9 @@ Similarly, on line 99 of TicketUtils.sol, assert is used to check if winTier is 
 File: LotterySetup.sol | Line: 147 | `assert(initialPot > 0);`
 https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotterySetup.sol#L147
 File: TicketUtils.sol | Line: 99 | `assert((winTier <= selectionSize) && (intersection == uint256(0)));`
-https://github.com/code-423n4/2023-03-wenwin/blob/main/TicketUtils.sol#L99
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/TicketUtils.sol#L99
 
-## 2 Use decimals() function directly from IERC20 interface instead of IERC20Metadata in LotterySetup contract.
+## 2. Use decimals() function directly from IERC20 interface instead of IERC20Metadata in LotterySetup contract.
 
 IERC20Metadata interface to retrieve the decimals() value of the rewardToken. While this is a valid approach, it can be simplified and made more efficient by using the decimals() function directly from the IERC20 interface.
 
