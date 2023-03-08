@@ -1,0 +1,8 @@
+{
+  "contest": 218,
+  "handle": "whoismatthewmc1",
+  "risk": "2",
+  "title": "Use _safeMint instead of _mint for ERC721 in Ticket.sol",
+  "issueId": 54,
+  "issueUrl": "https://github.com/code-423n4/2023-03-wenwin-findings/issues/54"
+}
