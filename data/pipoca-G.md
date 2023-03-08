@@ -3,8 +3,9 @@ The current implementation uses a for loop that loads the length of the array du
 
 Here is an example of how this optimization could be implemented:
 
-`uint length = arr.length;
-for (uint i; i < length; ++i) {
+`uint length = arr.length;`
+
+`for (uint i; i < length; ++i) {
     //Operations not affecting the length of the array.
 }`
 
