@@ -1,0 +1,8 @@
+{
+  "contest": 218,
+  "handle": "SovaSlava",
+  "risk": "2",
+  "title": "User can put own address as frontend's address in buyTickets() and get frontend reward",
+  "issueId": 135,
+  "issueUrl": "https://github.com/code-423n4/2023-03-wenwin-findings/issues/135"
+}
