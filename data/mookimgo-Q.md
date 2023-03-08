@@ -2,6 +2,8 @@
 
 Ticket.sol does not has custom tokenURI function, which leads to incorrect NFT image display, makes it hard for players to buy tickets on Opensea or other NFT marketplaces.
 
+If tokenURI do not correctly display enough information to user, attacker can trick victim to buy his claimed Ticket.
+
 Suggestion: Add a tokenURI function to render `drawId`, `combination`, and the most important `claimed`. This can be done in solidity by concatenating svg lines and use base64 encode.
 
 ```
