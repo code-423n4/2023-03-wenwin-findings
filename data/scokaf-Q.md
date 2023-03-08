@@ -195,3 +195,30 @@ Manual Analysis
 Ethereum Smart Contract Best Practices - Lock pragmas to specific compiler versions. 
 
 For reference, see https://consensys.github.io/smart-contract-best-practices/development-recommendations/solidity-specific/locking-pragmas/
+
+# 5: USE CONSTANTS FOR NUMBERS
+
+Vulnerability details
+
+## Impact:
+
+In a few locations in the code, numbers like 1e18  are used. The same goes for values like: type(uint256).max It is quite easy to make a mistake somewhere, also when comparing values.
+
+
+## Proof of Concept
+
+https://github.com/code-423n4/2023-03-wenwin/blob/91b89482aaedf8b8feb73c771d11c257eed997e8/src/staking/Staking.sol#L58 
+
+https://github.com/code-423n4/2023-03-wenwin/blob/91b89482aaedf8b8feb73c771d11c257eed997e8/src/staking/Staking.sol#L62 
+
+https://github.com/code-423n4/2023-03-wenwin/blob/91b89482aaedf8b8feb73c771d11c257eed997e8/src/LotterySetup.sol#L126 
+
+
+## Tools Used
+
+Manual Analysis
+
+### Recommended Mitigation Steps
+
+We recommend defining constants for the above types of numbers used throughout the code.
+
