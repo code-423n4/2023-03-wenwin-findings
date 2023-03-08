@@ -1,0 +1,8 @@
+{
+  "contest": 218,
+  "handle": "Haipls",
+  "risk": "3",
+  "title": "Locking rewards tokens in Staking contract when there are no stakes",
+  "issueId": 76,
+  "issueUrl": "https://github.com/code-423n4/2023-03-wenwin-findings/issues/76"
+}
