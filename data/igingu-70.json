@@ -1,0 +1,8 @@
+{
+  "contest": 218,
+  "handle": "igingu",
+  "risk": "2",
+  "title": "Malicious onlyOwner and changing of Oracle can drain Lottery",
+  "issueId": 70,
+  "issueUrl": "https://github.com/code-423n4/2023-03-wenwin-findings/issues/70"
+}
