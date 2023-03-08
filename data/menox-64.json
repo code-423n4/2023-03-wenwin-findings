@@ -1,0 +1,8 @@
+{
+  "contest": 218,
+  "handle": "menox",
+  "risk": "2",
+  "title": "Frontend rewards are \"locked\" at the 0 address if no frontend address is specified when buying a ticket",
+  "issueId": 64,
+  "issueUrl": "https://github.com/code-423n4/2023-03-wenwin-findings/issues/64"
+}
