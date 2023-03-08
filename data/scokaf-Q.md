@@ -222,21 +222,26 @@ Manual Analysis
 
 We recommend defining constants for the above types of numbers used throughout the code.
 
-# 6: USE UNDERSCORES FOR NUMBER LITERALS
+# 6: USE UNDERSCORES FOR NUMBER LITERALS AND MORE READABLE CONSTANTS
 
 Vulnerability details
 
 ## Context:
 
-There are occasions where certain numbers have been hardcoded, either in variable or in the code itself. Large numbers can become hard to read.
+There are occasions where certain numbers have been hardcoded, either in variables or in the code itself. Large numbers can become hard to read. The same goes for some constant values that are difficult to read at one time because they have a lot of 0s. Solidity allows _ to separate a series of zeroes.
 
 
 ## Proof of Concept
+
+>***Number Litterals***
 
 https://github.com/code-423n4/2023-03-wenwin/blob/91b89482aaedf8b8feb73c771d11c257eed997e8/src/PercentageMath.sol#L11 
 
 https://github.com/code-423n4/2023-03-wenwin/blob/91b89482aaedf8b8feb73c771d11c257eed997e8/src/ReferralSystem.sol#L129 
 
+>***Constants***
+
+https://github.com/code-423n4/2023-03-wenwin/blob/91b89482aaedf8b8feb73c771d11c257eed997e8/src/PercentageMath.sol#L11 
 
 ## Tools Used
 
@@ -244,4 +249,7 @@ Manual Analysis
 
 ### Recommended Mitigation Steps
 
-Consider using underscores for number literals to improve their readability.
+Consider using underscores for number literals to improve their readability. And Recommend the following replacements for constants:
+
+1000 with 10_00
+
