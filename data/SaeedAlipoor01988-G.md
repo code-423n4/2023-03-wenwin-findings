@@ -30,14 +30,3 @@ https://code4rena.com/reports/2022-12-prepo/#g-02-multiple-addressid-mappings-ca
 https://github.com/code-423n4/2023-03-wenwin/blob/91b89482aaedf8b8feb73c771d11c257eed997e8/src/staking/Staking.sol#L19
 https://github.com/code-423n4/2023-03-wenwin/blob/91b89482aaedf8b8feb73c771d11c257eed997e8/src/staking/Staking.sol#L20
 ```
-
-###############  functions with no usage ###############  
-
-#### Impact
-what is usage of requireFinishedDraw and mintNativeTokens functions in the Lottery contract. they are internal functions and i don't see anywhere you call them. if there is not usage for them so remove them to save gas.
-
-#### Findings:
-```
-https://github.com/code-423n4/2023-03-wenwin/blob/91b89482aaedf8b8feb73c771d11c257eed997e8/src/Lottery.sol#L285
-https://github.com/code-423n4/2023-03-wenwin/blob/91b89482aaedf8b8feb73c771d11c257eed997e8/src/Lottery.sol#L279
-```
