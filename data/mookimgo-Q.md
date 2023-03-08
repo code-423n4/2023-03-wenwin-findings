@@ -50,15 +50,3 @@ function tokenURI(uint256 tokenId) override public view returns (string memory) 
 }
 ```
 
-# 2. ChainLink VRF v2 subscription model should be used, instead of V2 Wrapper
-
-As the chainlink docs said https://docs.chain.link/vrf/v2/direct-funding 
-> Direct funding method. This method doesn’t require a subscription and is optimal for one-off requests for randomness.
-
-But wenwin will have many rounds of randomness request, making it unsuitable for using direct funding method.
-
-Consider changing to subscription method to avoid extra overhead caused by v2 wrapper.
-
-# 3. Lottery's `executeDraw` will fail if VRFv2RNSource's LINK balance depleted
-
-Owner should take care of this, and making sure this is always enough LINK token balance in VRFv2RNSource.
