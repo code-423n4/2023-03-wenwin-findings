@@ -127,6 +127,12 @@ of this would be
 [OpenZeppelin's AccessControl Roles](https://docs.openzeppelin.com/contracts/2.x/access-control#using-roles), and
 setting 2 or 3 people out of the core team as owners.
 
+# [L-06] Users should not be able to refer themselves
+Users being able to refer themselves might incentivise them to act selfishly, without necessarily being aware of the Minimum Elligible Rewards mechanism. The above might lead to a lot of players with referrals, but none of them enough for actual rewards.
+
+## Recommendation: 
+[buyTickets](https://github.com/code-423n4/2023-03-wenwin/blob/main/src/Lottery.sol#L110) should revert if ```msg.sender == referrer```.
+
 # [N-01] Documentation misses `yarn` instruction to install node modules
 
 Project's setup misses `yarn` instruction in the README, which is problematic when one wants to run package.json scripts
