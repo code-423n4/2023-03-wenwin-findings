@@ -1,0 +1,8 @@
+{
+  "contest": 218,
+  "handle": "mrudenko",
+  "risk": "2",
+  "title": "claimRewards can be called many times, increasing beneficiary claimedAmount",
+  "issueId": 82,
+  "issueUrl": "https://github.com/code-423n4/2023-03-wenwin-findings/issues/82"
+}
