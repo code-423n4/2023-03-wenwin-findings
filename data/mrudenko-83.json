@@ -1,0 +1,8 @@
+{
+  "contest": 218,
+  "handle": "mrudenko",
+  "risk": "3",
+  "title": "swapSource can be called my malicious owner to change random source to `their` random source which will return predictable random number for owner",
+  "issueId": 83,
+  "issueUrl": "https://github.com/code-423n4/2023-03-wenwin-findings/issues/83"
+}
