@@ -11,4 +11,4 @@ The `mint` function in `Tickets.sol` can be dangerous in the event that the `msg
 ```
 
 Recommendations
-Use the _safeMint() function (already included in the imported OpenZeppelin ERC721 contract) instead of _mint().
+Use the `_safeMint` function (already included in the imported OpenZeppelin ERC721 contract) instead of `_mint`.
