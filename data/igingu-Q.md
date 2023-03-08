@@ -127,7 +127,7 @@ of this would be
 [OpenZeppelin's AccessControl Roles](https://docs.openzeppelin.com/contracts/2.x/access-control#using-roles), and
 setting 2 or 3 people out of the core team as owners.
 
-# [L-06] Users should not be able to refer themselves
+# [L-07] Users should not be able to refer themselves
 Users being able to refer themselves might incentivise them to act selfishly, without necessarily being aware of the Minimum Elligible Rewards mechanism. The above might lead to a lot of players with referrals, but none of them enough for actual rewards.
 
 ## Recommendation: 
