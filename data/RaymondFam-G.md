@@ -97,3 +97,61 @@ PUSH1 [revert offset]
 JUMPI
 ```
 Disclaimer: There have been several bugs with security implications related to optimizations. For this reason, Solidity compiler optimizations are disabled by default, and it is unclear how many contracts in the wild actually use them. Therefore, it is unclear how well they are being tested and exercised. High-severity security issues due to optimization bugs have occurred in the past . A high-severity bug in the emscripten -generated solc-js compiler used by Truffle and Remix persisted until late 2018. The fix for this bug was not reported in the Solidity CHANGELOG. Another high-severity optimization bug resulting in incorrect bit shift results was patched in Solidity 0.5.6. Please measure the gas savings from optimizations, and carefully weigh them against the possibility of an optimization-related bug. Also, monitor the development and adoption of Solidity compiler optimizations to assess their maturity.
+
+## Non-strict inequalities are cheaper than strict ones
+In the EVM, there is no opcode for non-strict inequalities (>=, <=) and two operations are performed (> + = or < + =).
+
+As an example, the following `>=` inequality instance may be refactored as follows:
+
+[File: LotterySetup.sol#L51](https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotterySetup.sol#L51)
+
+```diff
+-        if (lotterySetupParams.selectionMax >= 120) {
+// Rationale for subtracting 1 on the right side of the inequality:
+// x >= 10; [10, 11, 12, ...]
+// x > 10 - 1 is the same as x > 9; [10, 11, 12 ...]
++        if (lotterySetupParams.selectionMax > 120 - 1) {
+```
+Similarly, the `<=` instance below may be replaced with `<` as follows:
+
+[File: LotterySetup.sol#L137](https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotterySetup.sol#L137)
+
+```diff
+-        if (block.timestamp <= initialPotDeadline) {
+// Rationale for adding 1 on the right side of the inequality:
+// x <= 10; [10, 9, 8, ...]
+// x < 10 + 1 is the same as x < 11; [10, 9, 8 ...]
++        if (block.timestamp < initialPotDeadline + 1) {
+```
+## += and -= cost more gas
+`+=` and `-=` generally cost 22 more gas than writing out the assigned equation explicitly. The amount of gas wasted can be quite sizable when repeatedly operated in a loop.
+
+For instance, the `+=` instance below may be refactored as follows:
+
+[File: Lottery.sol#L129](https://github.com/code-423n4/2023-03-wenwin/blob/main/src/Lottery.sol#L129)
+
+```diff
+-        frontendDueTicketSales[frontend] += tickets.length;
++        frontendDueTicketSales[frontend] = frontendDueTicketSales[frontend] + tickets.length;
+```
+Similarly, the `-=` instance below may be refactored as follows:
+
+[File: LotteryMath.sol#L55](https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotteryMath.sol#L55)
+
+```diff
+-        excessPotInt -= int256(fixedJackpotSize);
++        excessPotInt = excessPotInt - int256(fixedJackpotSize);
+```
+## `||` costs less gas than its equivalent `&&`
+Rule of thumb: `(x && y)` is `(!(!x || !y))`
+
+Even with the 10k Optimizer enabled: `||`, OR conditions cost less than their equivalent `&&`, AND conditions.
+
+As an example, the instance below may be refactored as follows:
+
+[File: LotteryMath.sol#L83](https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotteryMath.sol#L83)
+
+```diff
+-        if (excessPot > 0 && ticketsSold > 0) {
++        if (!(excessPot == 0 || ticketsSold == 0)) {
+```
