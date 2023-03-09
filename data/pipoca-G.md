@@ -36,5 +36,68 @@ https://github.com/code-423n4/2023-03-wenwin/blob/main/src/TicketUtils.sol#L65
 File: TicketUtils.sol | Line: 95 | for (uint8 i = 0; i < selectionMax; ++i) {
 https://github.com/code-423n4/2023-03-wenwin/blob/main/src/TicketUtils.sol#L95
 
+## 3. Bitwise operations can be more gas-efficient than multiplication and division
+
+in cases where gas savings are a high priority and the use of bitwise operations can achieve the same outcome as multiplication and division, it may be a reasonable choice for developers to use bitwise operations. However, it is important to ensure that the benefits of gas savings are balanced against the potential drawbacks, such as reduced code readability and increased risk of errors, and that any use of bitwise operations is thoroughly tested and audited to ensure correctness and efficiency.
+
+
+File: Lottery.sol | Line: 130 | rewardToken.safeTransferFrom(msg.sender, address(this), ticketPrice * tickets.length);
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/Lottery.sol#L130
+File: Lottery.sol | Line: 275 | currentNetProfit += int256(unclaimedJackpotTickets * winAmount[drawId][selectionSize]);
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/Lottery.sol#L275
+File: LotteryMath.sol | Line: 14 | uint256 public constant STAKING_REWARD = 20 * PercentageMath.ONE_PERCENT;
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotteryMath.sol#L14
+File: LotteryMath.sol | Line: 16 | uint256 public constant FRONTEND_REWARD = 10 * PercentageMath.ONE_PERCENT;
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotteryMath.sol#L16
+File: LotteryMath.sol | Line: 20 | uint256 public constant SAFETY_MARGIN = 67 * PercentageMath.ONE_PERCENT;
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotteryMath.sol#L20
+File: LotteryMath.sol | Line: 22 | uint256 public constant EXCESS_BONUS_ALLOCATION = 50 * PercentageMath.ONE_PERCENT;
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotteryMath.sol#L22
+File: LotteryMath.sol | Line: 47 | uint256 ticketsSalesToPot = (ticketsSold * ticketPrice).getPercentage(TICKET_PRICE_TO_POT);
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotteryMath.sol#L47
+File: LotteryMath.sol | Line: 53 | * ticketsSold * expectedPayout;
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotteryMath.sol#L53
+File: LotteryMath.sol | Line: 84 | bonusMulti += (excessPot * EXCESS_BONUS_ALLOCATION) / (ticketsSold * expectedPayout);
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotteryMath.sol#L84
+File: LotteryMath.sol | Line: 129 | dueRewards = (ticketsSold * ticketPrice).getPercentage(rewardPercentage);
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotteryMath.sol#L129
+File: LotterySetup.sol | Line: 79 | uint256 tokenUnit = 10 ** IERC20Metadata(address(lotterySetupParams.token)).decimals();
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotterySetup.sol#L79
+File: LotterySetup.sol | Line: 80 | minInitialPot = 4 * tokenUnit;
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotterySetup.sol#L80
+File: LotterySetup.sol | Line: 81 | jackpotBound = 2_000_000 * tokenUnit;
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotterySetup.sol#L81
+File: LotterySetup.sol | Line: 126 | uint256 mask = uint256(type(uint16).max) << (winTier * 16);
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotterySetup.sol#L126
+File: LotterySetup.sol | Line: 127 | uint256 extracted = (nonJackpotFixedRewards & mask) >> (winTier * 16);
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotterySetup.sol#L127
+File: LotterySetup.sol | Line: 128 | return extracted * (10 ** (IERC20Metadata(address(rewardToken)).decimals() - 1));
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotterySetup.sol#L128
+File: LotterySetup.sol | Line: 153 | time = firstDrawSchedule + (drawId * drawPeriod);
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotterySetup.sol#L153
+File: LotterySetup.sol | Line: 168 | uint256 divisor = 10 ** (IERC20Metadata(address(rewardToken)).decimals() - 1);
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotterySetup.sol#L168
+File: LotterySetup.sol | Line: 174 | packed |= uint256(reward) << (winTier * 16);
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotterySetup.sol#L174
+File: PercentageMath.sol | Line: 18 | return number * percentage / PERCENTAGE_BASE;
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/PercentageMath.sol#L18
+File: PercentageMath.sol | Line: 23 | return number * int256(percentage) / int256(PERCENTAGE_BASE);
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/PercentageMath.sol#L23
+File: ReferralSystem.sol | Line: 123 | return totalTicketsSoldPrevDraw.getPercentage(PercentageMath.ONE_PERCENT * 75 / 100);
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/ReferralSystem.sol#L123
+File: ReferralSystem.sol | Line: 127 | return totalTicketsSoldPrevDraw.getPercentage(PercentageMath.ONE_PERCENT * 50 / 100);
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/ReferralSystem.sol#L127
+File: ReferralSystem.sol | Line: 141 | claimedReward = referrerRewardPerDrawForOneTicket[drawId] * _unclaimedTickets.referrerTicketCount;
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/ReferralSystem.sol#L141
+File: ReferralSystem.sol | Line: 147 | claimedReward += playerRewardsPerDrawForOneTicket[drawId] * _unclaimedTickets.playerTicketCount;
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/ReferralSystem.sol#L147
+File: ReferralSystem.sol | Line: 157 | uint256 decrease = uint256(drawId) * playerRewardDecreasePerDraw;
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/ReferralSystem.sol#L157
+File: Staking.sol | Line: 58 | return rewardPerTokenStored + (unclaimedRewards * 1e18 / _totalSupply);
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/staking/Staking.sol#L58
+File: Staking.sol | Line: 62 | return balanceOf(account) * (rewardPerToken() - userRewardPerTokenPaid[account]) / 1e18 + rewards[account];
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/staking/Staking.sol#L62
+
+
 
 
