@@ -1,0 +1,8 @@
+{
+  "contest": 218,
+  "handle": "sashik_eth",
+  "risk": "2",
+  "title": "The buyer of the ticket could be front-runned by the ticket owner who claims the rewards before the ticket's NFT is traded",
+  "issueId": 366,
+  "issueUrl": "https://github.com/code-423n4/2023-03-wenwin-findings/issues/366"
+}
