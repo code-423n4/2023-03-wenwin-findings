@@ -1,0 +1,8 @@
+{
+  "contest": 218,
+  "handle": "AITechCoder",
+  "risk": "3",
+  "title": "Stake and withdraw in the same block defeats the purpose of staking and discounts tickets by up to 19.7%",
+  "issueId": 479,
+  "issueUrl": "https://github.com/code-423n4/2023-03-wenwin-findings/issues/479"
+}
