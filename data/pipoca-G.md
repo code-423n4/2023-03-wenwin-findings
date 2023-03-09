@@ -156,6 +156,44 @@ https://github.com/code-423n4/2023-03-wenwin/blob/main/src/TicketUtils.sol#L29
 File: TicketUtils.sol | Line: 96 | winTier += uint8(intersection & uint120(1));
 https://github.com/code-423n4/2023-03-wenwin/blob/main/src/TicketUtils.sol#L96
 
+## 6. Use of "int" Data Type for Variables that Should Never Be Negative
+
+The use of "int" data type for variables that should never be negative can result in unnecessary memory usage and potential errors. This is because "int" data type reserves memory for both positive and negative values, even when the variable should never be negative. Additionally, using "int" for variables that should never be negative can lead to potential errors if negative values are inadvertently assigned to these variables.
+
+File: Lottery.sol | Line: 40 | int256 public override currentNetProfit;
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/Lottery.sol#L40
+File: Lottery.sol | Line: 275 | currentNetProfit += int256(unclaimedJackpotTickets * winAmount[drawId][selectionSize]);
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/Lottery.sol#L275
+File: LotteryMath.sol | Line: 11 | using PercentageMath for int256;
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotteryMath.sol#L11
+File: LotteryMath.sol | Line: 36 | int256 oldProfit,
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotteryMath.sol#L36
+File: LotteryMath.sol | Line: 48 | newProfit = oldProfit + int256(ticketsSalesToPot);
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotteryMath.sol#L48
+File: LotteryMath.sol | Line: 55 | newProfit -= int256(expectedRewardsOut);
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotteryMath.sol#L55
+File: LotteryMath.sol | Line: 62 | function calculateExcessPot(int256 netProfit, uint256 fixedJackpotSize) internal pure returns (uint256 excessPot) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotteryMath.sol#L62
+File: LotteryMath.sol | Line: 63 | int256 excessPotInt = netProfit.getPercentageInt(SAFETY_MARGIN);
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotteryMath.sol#L63
+File: LotteryMath.sol | Line: 64 | excessPotInt -= int256(fixedJackpotSize);
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotteryMath.sol#L64
+File: LotteryMath.sol | Line: 97 | int256 netProfit,
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotteryMath.sol#L97
+File: PercentageMath.sol | Line: 22 | function getPercentageInt(int256 number, uint256 percentage) internal pure returns (int256 result) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/PercentageMath.sol#L22
+File: PercentageMath.sol | Line: 23 | return number * int256(percentage) / int256(PERCENTAGE_BASE);
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/PercentageMath.sol#L23
+
+
+
+
+
+
+
+
+
+
 
 
 
