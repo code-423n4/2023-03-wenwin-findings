@@ -1,0 +1,2 @@
+##  Internal and private functions names should start with underscore
+Internal and private functions throughout the codebase do not have a name that starts with an underscore. The lack of clarity over the functions visibility could lead to misuse of these functions.
