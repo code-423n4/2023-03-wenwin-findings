@@ -1,0 +1,8 @@
+{
+  "contest": 218,
+  "handle": "yongskiws",
+  "risk": "2",
+  "title": "not validate the user to `buyTickets` by entering the lottery ID ticket number and the user's wallet address",
+  "issueId": 209,
+  "issueUrl": "https://github.com/code-423n4/2023-03-wenwin-findings/issues/209"
+}
