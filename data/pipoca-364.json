@@ -1,0 +1,8 @@
+{
+  "contest": 218,
+  "handle": "pipoca",
+  "risk": "2",
+  "title": "The buyTickets() function lacks a check for the length of the drawIds and tickets array",
+  "issueId": 364,
+  "issueUrl": "https://github.com/code-423n4/2023-03-wenwin-findings/issues/364"
+}
