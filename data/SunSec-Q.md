@@ -112,7 +112,4 @@ So it's not a good practice.
 ## Tools Used
 Manual
 ## Recommended Mitigation Steps
-Add onlyOwner modifier 
-
-
- 
+Add onlyOwner modifier
