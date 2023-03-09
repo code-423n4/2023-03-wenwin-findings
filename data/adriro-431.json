@@ -1,0 +1,8 @@
+{
+  "contest": 218,
+  "handle": "adriro",
+  "risk": "2",
+  "title": "Ticket minting should use `safeMint`",
+  "issueId": 431,
+  "issueUrl": "https://github.com/code-423n4/2023-03-wenwin-findings/issues/431"
+}
