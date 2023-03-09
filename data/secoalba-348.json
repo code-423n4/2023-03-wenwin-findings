@@ -1,0 +1,8 @@
+{
+  "contest": 218,
+  "handle": "secoalba",
+  "risk": "2",
+  "title": "The \"buyTickets\" function does not check if the values of \"drawIds\" and \"tickets\" are within the expected range.",
+  "issueId": 348,
+  "issueUrl": "https://github.com/code-423n4/2023-03-wenwin-findings/issues/348"
+}
