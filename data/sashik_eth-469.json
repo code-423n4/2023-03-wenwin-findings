@@ -1,0 +1,8 @@
+{
+  "contest": 218,
+  "handle": "sashik_eth",
+  "risk": "2",
+  "title": "Malicious owner could arbitrarily swap random number source if maxFailedAttempts initialized with 0 value",
+  "issueId": 469,
+  "issueUrl": "https://github.com/code-423n4/2023-03-wenwin-findings/issues/469"
+}
