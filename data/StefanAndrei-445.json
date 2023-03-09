@@ -1,0 +1,8 @@
+{
+  "contest": 218,
+  "handle": "StefanAndrei",
+  "risk": "3",
+  "title": "No security checks in VRF might lead to compromised results",
+  "issueId": 445,
+  "issueUrl": "https://github.com/code-423n4/2023-03-wenwin-findings/issues/445"
+}
