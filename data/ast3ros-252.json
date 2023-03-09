@@ -1,0 +1,8 @@
+{
+  "contest": 218,
+  "handle": "ast3ros",
+  "risk": "2",
+  "title": "[M-1] To earn additional rewards, buyers can set both `frontend` and `referrer` to their own address (msg.sender).",
+  "issueId": 252,
+  "issueUrl": "https://github.com/code-423n4/2023-03-wenwin-findings/issues/252"
+}
