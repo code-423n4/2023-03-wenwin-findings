@@ -98,6 +98,35 @@ https://github.com/code-423n4/2023-03-wenwin/blob/main/src/staking/Staking.sol#L
 File: Staking.sol | Line: 62 | return balanceOf(account) * (rewardPerToken() - userRewardPerTokenPaid[account]) / 1e18 + rewards[account];
 https://github.com/code-423n4/2023-03-wenwin/blob/main/src/staking/Staking.sol#L62
 
+##  4. Use of "!=" instead of ">" for unsigned integers
+
+The use of  "!=" instead of ">" for unsigned integers can result in gas savings. 
+
+File: Lottery.sol | Line: 208 | if (jackpotWinners > 0) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/Lottery.sol#L208
+File: Lottery.sol | Line: 220 | jackpotWinners > 0,
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/Lottery.sol#L220
+File: LotteryMath.sol | Line: 65 | excessPot = excessPotInt > 0 ? uint256(excessPotInt) : 0;
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotteryMath.sol#L65
+File: LotteryMath.sol | Line: 83 | if (excessPot > 0 && ticketsSold > 0) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotteryMath.sol#L83
+File: LotterySetup.sol | Line: 133 | if (initialPot > 0) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotterySetup.sol#L133
+File: LotterySetup.sol | Line: 147 | assert(initialPot > 0);
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotterySetup.sol#L147
+File: ReferralSystem.sol | Line: 98 | if (totalTicketsForReferrersPerCurrentDraw > 0) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/ReferralSystem.sol#L98
+File: ReferralSystem.sol | Line: 104 | if (playerRewardForDraw > 0) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/ReferralSystem.sol#L104
+File: ReferralSystem.sol | Line: 146 | if (_unclaimedTickets.playerTicketCount > 0) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/ReferralSystem.sol#L146
+File: ReferralSystem.sol | Line: 151 | if (claimedReward > 0) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/ReferralSystem.sol#L151
+File: Staking.sol | Line: 94 | if (reward > 0) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/staking/Staking.sol#L94
+
+
+
 
 
 
