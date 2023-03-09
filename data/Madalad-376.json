@@ -1,0 +1,8 @@
+{
+  "contest": 218,
+  "handle": "Madalad",
+  "risk": "3",
+  "title": "`Lottery` owner can manipulate the RNG to favour themselves, or other certain participants",
+  "issueId": 376,
+  "issueUrl": "https://github.com/code-423n4/2023-03-wenwin-findings/issues/376"
+}
