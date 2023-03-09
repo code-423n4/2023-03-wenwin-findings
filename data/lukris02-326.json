@@ -1,0 +1,8 @@
+{
+  "contest": 218,
+  "handle": "lukris02",
+  "risk": "3",
+  "title": "If ```frontend == address(0)```, 10% of the ticket price is not used as intended",
+  "issueId": 326,
+  "issueUrl": "https://github.com/code-423n4/2023-03-wenwin-findings/issues/326"
+}
