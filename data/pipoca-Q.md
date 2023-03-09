@@ -259,4 +259,9 @@ Using underscores for number literals improves readability and makes it easier t
 https://github.com/code-423n4/2023-03-wenwin/blob/main/src/PercentageMath.sol#L11
 https://github.com/code-423n4/2023-03-wenwin/blob/main/src/ReferralSystem.sol#L129
 
+## 7. Absence of event logging
+
+The TicketUtils contract updates global state variables (e.g., ticketSize) without emitting events. This makes it more difficult for external parties to audit the contract's operation.
+
+https://github.com/code-423n4/2023-03-wenwin/blob/91b89482aaedf8b8feb73c771d11c257eed997e8/src/TicketUtils.sol#L27
 
