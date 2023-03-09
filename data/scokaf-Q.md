@@ -253,3 +253,14 @@ Consider using underscores for number literals to improve their readability. And
 
 1000 with 10_00
 
+# 7: SHOWING THE ACTUAL VALUES OF NUMBERS IN NATSPEC COMMENTS MAKES CHECKING AND READING CODE EASIER
+
+Vulnerability details
+
+## Context:
+
+> ***src/RNSourceController.sol***
+
+\- uint256 private constant MAX_REQUEST_DELAY = 5 hours;
+\+ uint256 private constant MAX_REQUEST_DELAY = 5 hours; // 18_000 (5 * 60 * 60)
+
