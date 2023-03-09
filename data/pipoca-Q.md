@@ -22,4 +22,68 @@ https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotterySetup.sol#L128
 File: LotterySetup.sol | Line: 168 | uint256 divisor = 10 ** (IERC20Metadata(address(rewardToken)).decimals() - 1);
 https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotterySetup.sol#L168
 
+## 3  Use constants instead of immutable variables
+
+It is recommended to define variables as constants if they are not defined at contract creation. In certain cases, it may be beneficial to move immutable variables to the constructor, as shown in this example: https://github.com/code-423n4/2023-03-wenwin/blob/main/src/VRFv2RNSource.sol#L11. Additionally, any immutable variable established at contract creation within a constructor should be written in uppercase letters for better readability.
+
+File: Lottery.sol | Line: 29 | address public immutable override stakingRewardRecipient;
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/Lottery.sol#L29
+File: LotterySetup.sol | Line: 15 | uint256 public immutable override minInitialPot;
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotterySetup.sol#L15
+File: LotterySetup.sol | Line: 16 | uint256 public immutable override jackpotBound;
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotterySetup.sol#L16
+File: LotterySetup.sol | Line: 18 | IERC20 public immutable override rewardToken;
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotterySetup.sol#L18
+File: LotterySetup.sol | Line: 19 | IERC20 public immutable override nativeToken;
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotterySetup.sol#L19
+File: LotterySetup.sol | Line: 21 | uint256 public immutable override ticketPrice;
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotterySetup.sol#L21
+File: LotterySetup.sol | Line: 25 | uint256 public immutable override initialPotDeadline;
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotterySetup.sol#L25
+File: LotterySetup.sol | Line: 26 | uint256 internal immutable firstDrawSchedule;
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotterySetup.sol#L26
+File: LotterySetup.sol | Line: 27 | uint256 public immutable override drawPeriod;
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotterySetup.sol#L27
+File: LotterySetup.sol | Line: 28 | uint256 public immutable override drawCoolDownPeriod;
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotterySetup.sol#L28
+File: LotterySetup.sol | Line: 30 | uint8 public immutable override selectionSize;
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotterySetup.sol#L30
+File: LotterySetup.sol | Line: 31 | uint8 public immutable override selectionMax;
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotterySetup.sol#L31
+File: LotterySetup.sol | Line: 32 | uint256 public immutable override expectedPayout;
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotterySetup.sol#L32
+File: LotterySetup.sol | Line: 34 | uint256 private immutable nonJackpotFixedRewards;
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotterySetup.sol#L34
+File: LotteryToken.sol | Line: 14 | address public immutable override owner;
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotteryToken.sol#L14
+File: ReferralSystem.sol | Line: 12 | uint256 public immutable override playerRewardFirstDraw;
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/ReferralSystem.sol#L12
+File: ReferralSystem.sol | Line: 13 | uint256 public immutable override playerRewardDecreasePerDraw;
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/ReferralSystem.sol#L13
+File: RNSourceBase.sol | Line: 8 | address internal immutable authorizedConsumer;
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/RNSourceBase.sol#L8
+File: RNSourceController.sol | Line: 17 | uint256 public immutable override maxFailedAttempts;
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/RNSourceController.sol#L17
+File: RNSourceController.sol | Line: 18 | uint256 public immutable override maxRequestDelay;
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/RNSourceController.sol#L18
+File: StakedTokenLock.sol | Line: 10 | IStaking public immutable override stakedToken;
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/staking/StakedTokenLock.sol#L10
+File: StakedTokenLock.sol | Line: 11 | IERC20 public immutable override rewardsToken;
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/staking/StakedTokenLock.sol#L11
+File: StakedTokenLock.sol | Line: 12 | uint256 public immutable override depositDeadline;
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/staking/StakedTokenLock.sol#L12
+File: StakedTokenLock.sol | Line: 13 | uint256 public immutable override lockDuration;
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/staking/StakedTokenLock.sol#L13
+File: Staking.sol | Line: 14 | ILottery public immutable override lottery;
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/staking/Staking.sol#L14
+File: Staking.sol | Line: 15 | IERC20 public immutable override rewardsToken;
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/staking/Staking.sol#L15
+File: Staking.sol | Line: 16 | IERC20 public immutable override stakingToken;
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/staking/Staking.sol#L16
+File: VRFv2RNSource.sol | Line: 10 | uint16 public immutable override requestConfirmations;
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/VRFv2RNSource.sol#L10
+File: VRFv2RNSource.sol | Line: 11 | uint32 public immutable override callbackGasLimit;
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/VRFv2RNSource.sol#L11
+
+
 
