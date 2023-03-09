@@ -1,0 +1,8 @@
+{
+  "contest": 218,
+  "handle": "dontonka",
+  "risk": "2",
+  "title": "StakedTokenLock doesn't enforce completelly lockup policy",
+  "issueId": 180,
+  "issueUrl": "https://github.com/code-423n4/2023-03-wenwin-findings/issues/180"
+}
