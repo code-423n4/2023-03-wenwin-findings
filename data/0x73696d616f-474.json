@@ -1,0 +1,8 @@
+{
+  "contest": 218,
+  "handle": "0x73696d616f",
+  "risk": "3",
+  "title": "Validator/miner can set Block timestamp to a draw scheduled date and buy winning ticket if drawCoolDownPeriod is set to zero",
+  "issueId": 474,
+  "issueUrl": "https://github.com/code-423n4/2023-03-wenwin-findings/issues/474"
+}
