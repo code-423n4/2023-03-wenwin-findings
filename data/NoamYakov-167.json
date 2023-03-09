@@ -1,0 +1,8 @@
+{
+  "contest": 218,
+  "handle": "NoamYakov",
+  "risk": "3",
+  "title": "Insolvency: The `Lottery` may incorrectly consider a year old jackpot ticket as unclaimed and increase `currentNetProfit` by its prize while it was actually claimed",
+  "issueId": 167,
+  "issueUrl": "https://github.com/code-423n4/2023-03-wenwin-findings/issues/167"
+}
