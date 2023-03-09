@@ -155,3 +155,40 @@ As an example, the instance below may be refactored as follows:
 -        if (excessPot > 0 && ticketsSold > 0) {
 +        if (!(excessPot == 0 || ticketsSold == 0)) {
 ```
+## Use smaller uint128 or smaller type and pack structs variables to use lesser amount of storage slots
+As the solidity EVM works with 32 bytes, most variables work fine with less than 32 bytes and may be packed inside a struct when sitting next to each other so that they can be stored in the same slot, this saves gas when writing to storage ~2000 gas.
+
+For instance, struct `LotteryDrawSchedule` of ILotterySetup.sol may be refactored as follows:
+
+[File: ILotterySetup.sol#L52-L60](https://github.com/code-423n4/2023-03-wenwin/blob/main/src/interfaces/ILotterySetup.sol#L52-L60)
+
+```diff
+/// @dev Lottery draw schedule parameters
+struct LotteryDrawSchedule {
+    /// @dev First draw is scheduled to take place at this timestamp
+-    uint256 firstDrawScheduledAt;
++    uint128 firstDrawScheduledAt;
+    /// @dev Period for running lottery
+-    uint256 drawPeriod;
++    uint64 drawPeriod;
+    /// @dev Cooldown period when users cannot register tickets for draw anymore
+-    uint256 drawCoolDownPeriod;
++    uint64 drawCoolDownPeriod;
+}
+```
+This alone will save ~4k gas with 3 slots of storage reduced to 1 slots.
+
+## Unchecked SafeMath saves gas
+"Checked" math, which is default in ^0.8.0 is not free. The compiler will add some overflow checks, somehow similar to those implemented by `SafeMath`. While it is reasonable to expect these checks to be less expensive than the current `SafeMath`, one should keep in mind that these checks will increase the cost of "basic math operation" that were not previously covered. This particularly concerns variable increments in for loops. When no arithmetic overflow/underflow is going to happen, `unchecked { ++i ;}` to use the previous wrapping behavior further saves gas just as in the for loop below as an example:
+
+[File: Lottery.sol#L125-L127](https://github.com/code-423n4/2023-03-wenwin/blob/main/src/Lottery.sol#L125-L127)
+
+```diff
+-        for (uint256 i = 0; i < drawIds.length; ++i) {
++        for (uint256 i = 0; i < drawIds.length) {
+            ticketIds[i] = registerTicket(drawIds[i], tickets[i], frontend, referrer);
++            unchecked {
++                ++i;
++            }
+        }
+```
