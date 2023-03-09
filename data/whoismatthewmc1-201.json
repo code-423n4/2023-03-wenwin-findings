@@ -1,0 +1,8 @@
+{
+  "contest": 218,
+  "handle": "whoismatthewmc1",
+  "risk": "2",
+  "title": "Scenario in ReferralSystem.referralDrawFinalize() where reward (for both referrer and player) < totalTicketsForReferrersPerCurrentDraw can result in loss of rewards",
+  "issueId": 201,
+  "issueUrl": "https://github.com/code-423n4/2023-03-wenwin-findings/issues/201"
+}
