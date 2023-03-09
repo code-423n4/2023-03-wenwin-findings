@@ -1,0 +1,8 @@
+{
+  "contest": 218,
+  "handle": "ksk2345",
+  "risk": "2",
+  "title": "Lottery.finalizeInitialPotRaise() does not have any authorization",
+  "issueId": 323,
+  "issueUrl": "https://github.com/code-423n4/2023-03-wenwin-findings/issues/323"
+}
