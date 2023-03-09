@@ -1,0 +1,8 @@
+{
+  "contest": 218,
+  "handle": "savi0ur",
+  "risk": "3",
+  "title": "Protocol doesn't handle fee on transfer token when used as a rewardToken",
+  "issueId": 268,
+  "issueUrl": "https://github.com/code-423n4/2023-03-wenwin-findings/issues/268"
+}
