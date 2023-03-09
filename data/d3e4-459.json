@@ -1,0 +1,8 @@
+{
+  "contest": 218,
+  "handle": "d3e4",
+  "risk": "3",
+  "title": "Multiplier must be capped to prevent expected payout exceeding ticket price",
+  "issueId": 459,
+  "issueUrl": "https://github.com/code-423n4/2023-03-wenwin-findings/issues/459"
+}
