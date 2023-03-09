@@ -1,0 +1,8 @@
+{
+  "contest": 218,
+  "handle": "dontonka",
+  "risk": "2",
+  "title": "Rewards doesn't have the allocation policy immutable in the contract",
+  "issueId": 178,
+  "issueUrl": "https://github.com/code-423n4/2023-03-wenwin-findings/issues/178"
+}
