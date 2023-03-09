@@ -1,0 +1,8 @@
+{
+  "contest": 218,
+  "handle": "P-384",
+  "risk": "3",
+  "title": "Concerns and considerations regarding the use of Oracle for random number generation:",
+  "issueId": 185,
+  "issueUrl": "https://github.com/code-423n4/2023-03-wenwin-findings/issues/185"
+}
