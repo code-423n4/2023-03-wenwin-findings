@@ -248,6 +248,12 @@ The constructor function's code block may be left empty if the ERC721 constructo
 File: Ticket.sol | Line: 17 | constructor() ERC721("Wenwin Lottery Ticket", "WLT") { }
 https://github.com/code-423n4/2023-03-wenwin/blob/main/src/Ticket.sol#L17
 
+## 6. Use of Underscore for Number Literals in PercentageMath.sol
 
+In the file PercentageMath.sol, on line 11, the constant ONE_PERCENT is defined as 1000. It is recommended to use an underscore for number literals to improve readability and avoid errors. Therefore, it is recommended to define ONE_PERCENT as 10_000 instead of 1000.
+
+Using underscores for number literals improves readability and makes it easier to understand the number of zeros in large numbers. It also helps to avoid errors that can occur due to typos or missing zeros. Therefore, using underscores is a good practice and should be followed consistently throughout the codebase.
+
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/PercentageMath.sol#L11
 
 
