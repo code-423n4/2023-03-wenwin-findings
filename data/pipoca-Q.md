@@ -85,5 +85,161 @@ https://github.com/code-423n4/2023-03-wenwin/blob/main/src/VRFv2RNSource.sol#L10
 File: VRFv2RNSource.sol | Line: 11 | uint32 public immutable override callbackGasLimit;
 https://github.com/code-423n4/2023-03-wenwin/blob/main/src/VRFv2RNSource.sol#L11
 
+## 4. There is a shorthand way to write an if/else statement that can improve readability and shorten the code:
+
+It increases code readability by making the logic more concise and easier to understand.
+It reduces the overall number of lines of code (SLOC), resulting in a more efficient and maintainable codebase.
+
+File: Lottery.sol | Line: 45 | if (!ticket.isValidTicket(selectionSize, selectionMax)) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/Lottery.sol#L45
+File: Lottery.sol | Line: 53 | if (drawExecutionInProgress) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/Lottery.sol#L53
+File: Lottery.sol | Line: 61 | if (!drawExecutionInProgress) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/Lottery.sol#L61
+File: Lottery.sol | Line: 70 | if (ownerOf(ticketId) != msg.sender) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/Lottery.sol#L70
+File: Lottery.sol | Line: 121 | if (drawIds.length != tickets.length) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/Lottery.sol#L121
+File: Lottery.sol | Line: 135 | if (block.timestamp < drawScheduledAt(currentDraw)) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/Lottery.sol#L135
+File: Lottery.sol | Line: 161 | if (!ticketInfo.claimed) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/Lottery.sol#L161
+File: Lottery.sol | Line: 164 | if (block.timestamp <= ticketRegistrationDeadline(ticketInfo.drawId + LotteryMath.DRAWS_PER_YEAR)) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/Lottery.sol#L164
+File: Lottery.sol | Line: 208 | if (jackpotWinners > 0) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/Lottery.sol#L208
+File: Lottery.sol | Line: 250 | if (beneficiary == stakingRewardRecipient) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/Lottery.sol#L250
+File: Lottery.sol | Line: 262 | if (claimedAmount == 0) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/Lottery.sol#L262
+File: Lottery.sol | Line: 272 | if (currentDraw >= LotteryMath.DRAWS_PER_YEAR) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/Lottery.sol#L272
+File: Lottery.sol | Line: 280 | if (drawId >= currentDraw) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/Lottery.sol#L280
+File: LotteryMath.sol | Line: 83 | if (excessPot > 0 && ticketsSold > 0) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotteryMath.sol#L83
+File: LotterySetup.sol | Line: 42 | if (address(lotterySetupParams.token) == address(0)) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotterySetup.sol#L42
+File: LotterySetup.sol | Line: 45 | if (lotterySetupParams.ticketPrice == uint256(0)) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotterySetup.sol#L45
+File: LotterySetup.sol | Line: 48 | if (lotterySetupParams.selectionSize == 0) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotterySetup.sol#L48
+File: LotterySetup.sol | Line: 51 | if (lotterySetupParams.selectionMax >= 120) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotterySetup.sol#L51
+File: LotterySetup.sol | Line: 54 | if (
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotterySetup.sol#L54
+File: LotterySetup.sol | Line: 60 | if (
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotterySetup.sol#L60
+File: LotterySetup.sol | Line: 65 | if (
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotterySetup.sol#L65
+File: LotterySetup.sol | Line: 74 | if (initialPotDeadline < (block.timestamp + lotterySetupParams.drawSchedule.drawPeriod)) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotterySetup.sol#L74
+File: LotterySetup.sol | Line: 106 | if (initialPot == 0) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotterySetup.sol#L106
+File: LotterySetup.sol | Line: 114 | if (block.timestamp > ticketRegistrationDeadline(drawId)) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotterySetup.sol#L114
+File: LotterySetup.sol | Line: 121 | if (winTier == selectionSize) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotterySetup.sol#L121
+File: LotterySetup.sol | Line: 123 | } else if (winTier == 0 || winTier > selectionSize) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotterySetup.sol#L123
+File: LotterySetup.sol | Line: 133 | if (initialPot > 0) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotterySetup.sol#L133
+File: LotterySetup.sol | Line: 137 | if (block.timestamp <= initialPotDeadline) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotterySetup.sol#L137
+File: LotterySetup.sol | Line: 141 | if (raised < minInitialPot) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotterySetup.sol#L141
+File: LotterySetup.sol | Line: 165 | if (rewards.length != (selectionSize) || rewards[0] != 0) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotterySetup.sol#L165
+File: LotterySetup.sol | Line: 171 | if ((rewards[winTier] % divisor) != 0) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotterySetup.sol#L171
+File: LotteryToken.sol | Line: 23 | if (msg.sender != owner) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotteryToken.sol#L23
+File: ReferralSystem.sol | Line: 32 | if (_rewardsToReferrersPerDraw.length == 0) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/ReferralSystem.sol#L32
+File: ReferralSystem.sol | Line: 36 | if (_rewardsToReferrersPerDraw[i] == 0) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/ReferralSystem.sol#L36
+File: ReferralSystem.sol | Line: 60 | if (referrer != address(0)) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/ReferralSystem.sol#L60
+File: ReferralSystem.sol | Line: 62 | if (unclaimedTickets[currentDraw][referrer].referrerTicketCount + numberOfTickets >= minimumEligible) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/ReferralSystem.sol#L62
+File: ReferralSystem.sol | Line: 63 | if (unclaimedTickets[currentDraw][referrer].referrerTicketCount < minimumEligible) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/ReferralSystem.sol#L63
+File: ReferralSystem.sol | Line: 89 | if (ticketsSoldDuringDraw == 0) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/ReferralSystem.sol#L89
+File: ReferralSystem.sol | Line: 98 | if (totalTicketsForReferrersPerCurrentDraw > 0) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/ReferralSystem.sol#L98
+File: ReferralSystem.sol | Line: 104 | if (playerRewardForDraw > 0) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/ReferralSystem.sol#L104
+File: ReferralSystem.sol | Line: 117 | if (totalTicketsSoldPrevDraw < 10_000) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/ReferralSystem.sol#L117
+File: ReferralSystem.sol | Line: 121 | if (totalTicketsSoldPrevDraw < 100_000) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/ReferralSystem.sol#L121
+File: ReferralSystem.sol | Line: 125 | if (totalTicketsSoldPrevDraw < 1_000_000) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/ReferralSystem.sol#L125
+File: ReferralSystem.sol | Line: 140 | if (_unclaimedTickets.referrerTicketCount >= minimumEligibleReferrals[drawId]) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/ReferralSystem.sol#L140
+File: ReferralSystem.sol | Line: 146 | if (_unclaimedTickets.playerTicketCount > 0) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/ReferralSystem.sol#L146
+File: ReferralSystem.sol | Line: 151 | if (claimedReward > 0) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/ReferralSystem.sol#L151
+File: RNSourceBase.sol | Line: 18 | if (authorizedConsumer != msg.sender) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/RNSourceBase.sol#L18
+File: RNSourceBase.sol | Line: 23 | if (requests[requestId].status != RequestStatus.None) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/RNSourceBase.sol#L23
+File: RNSourceBase.sol | Line: 34 | if (requests[requestId].status == RequestStatus.None) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/RNSourceBase.sol#L34
+File: RNSourceBase.sol | Line: 37 | if (requests[requestId].status == RequestStatus.Fulfilled) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/RNSourceBase.sol#L37
+File: RNSourceController.sol | Line: 27 | if (_maxFailedAttempts > MAX_MAX_FAILED_ATTEMPTS) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/RNSourceController.sol#L27
+File: RNSourceController.sol | Line: 30 | if (_maxRequestDelay > MAX_REQUEST_DELAY) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/RNSourceController.sol#L30
+File: RNSourceController.sol | Line: 39 | if (!lastRequestFulfilled) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/RNSourceController.sol#L39
+File: RNSourceController.sol | Line: 47 | if (msg.sender != address(source)) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/RNSourceController.sol#L47
+File: RNSourceController.sol | Line: 61 | if (lastRequestFulfilled) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/RNSourceController.sol#L61
+File: RNSourceController.sol | Line: 64 | if (block.timestamp - lastRequestTimestamp <= maxRequestDelay) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/RNSourceController.sol#L64
+File: RNSourceController.sol | Line: 69 | if (failedAttempts == maxFailedAttempts) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/RNSourceController.sol#L69
+File: RNSourceController.sol | Line: 78 | if (address(rnSource) == address(0)) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/RNSourceController.sol#L78
+File: RNSourceController.sol | Line: 81 | if (address(source) != address(0)) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/RNSourceController.sol#L81
+File: RNSourceController.sol | Line: 90 | if (address(newSource) == address(0)) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/RNSourceController.sol#L90
+File: RNSourceController.sol | Line: 95 | if (notEnoughRetryInvocations || notEnoughTimeReachingMaxFailedAttempts) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/RNSourceController.sol#L95
+File: StakedTokenLock.sol | Line: 26 | if (block.timestamp > depositDeadline) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/staking/StakedTokenLock.sol#L26
+File: StakedTokenLock.sol | Line: 39 | if (block.timestamp > depositDeadline && block.timestamp < depositDeadline + lockDuration) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/staking/StakedTokenLock.sol#L39
+File: Staking.sol | Line: 31 | if (address(_lottery) == address(0)) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/staking/Staking.sol#L31
+File: Staking.sol | Line: 34 | if (address(_rewardsToken) == address(0)) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/staking/Staking.sol#L34
+File: Staking.sol | Line: 37 | if (address(_stakingToken) == address(0)) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/staking/Staking.sol#L37
+File: Staking.sol | Line: 50 | if (_totalSupply == 0) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/staking/Staking.sol#L50
+File: Staking.sol | Line: 69 | if (amount == 0) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/staking/Staking.sol#L69
+File: Staking.sol | Line: 81 | if (amount == 0) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/staking/Staking.sol#L81
+File: Staking.sol | Line: 94 | if (reward > 0) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/staking/Staking.sol#L94
+File: Staking.sol | Line: 109 | if (from != address(0)) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/staking/Staking.sol#L109
+File: Staking.sol | Line: 113 | if (to != address(0)) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/staking/Staking.sol#L113
+File: TicketUtils.sol | Line: 69 | if (selected[j]) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/TicketUtils.sol#L69
+File: VRFv2RNSource.sol | Line: 33 | if (randomWords.length != 1) {
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/VRFv2RNSource.sol#L33
+
+
+
 
 
