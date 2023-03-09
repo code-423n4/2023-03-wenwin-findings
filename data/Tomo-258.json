@@ -1,0 +1,8 @@
+{
+  "contest": 218,
+  "handle": "Tomo",
+  "risk": "2",
+  "title": "【Tomo-M#1】Use safeMint instead of mint for ERC721",
+  "issueId": 258,
+  "issueUrl": "https://github.com/code-423n4/2023-03-wenwin-findings/issues/258"
+}
