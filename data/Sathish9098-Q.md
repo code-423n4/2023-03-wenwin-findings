@@ -2,6 +2,8 @@
 
 ### [1] For modern and more readable code; update import usages
 
+FINDINGS TYPE: NON CRITICAL
+
 Description
 
 Solidity code is also cleaner in another way that might not be noticeable: the struct Point. We were importing it previously with global import but not using it. The Point struct polluted the source code with an unnecessary object we were not using because we did not need it.
@@ -81,17 +83,26 @@ FILE : 2023-03-wenwin/src/RNSourceController.sol
 
 ### [2] Use safeMint Instead plain mint functions 
 
+FINDINGS TYPE: LOW
+
 Some benefits of using safeMint instead of mint
+
+OpenZeppelin [recommendation](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC721/ERC721.sol#L277) is to use the safe variant of _mint
 
  Prevents integer overflow, Protects against reentrancy attacks, Improved security,Better code quality
 
 FILE : 2023-03-wenwin/src/LotteryToken.sol
 
-   19: _mint(msg.sender, INITIAL_SUPPLY);
+    19: _mint(msg.sender, INITIAL_SUPPLY);
 
-   26:  _mint(account, amount);
+    26:  _mint(account, amount);
+
+Recommendation
+Replace _mint() with _safeMint().
 
 ### [3] MIXING AND OUTDATED COMPILER
+
+FINDINGS TYPE:  LOW
 
 The pragma version used are:
 
@@ -119,21 +130,23 @@ Apart from these, there are several minor bug fixes and improvements
 
 FILE : 2023-03-wenwin/src/LotteryToken.sol
 
-    3: pragma solidity 0.8.19;
+     3: pragma solidity 0.8.19;
 
 FILE: 2023-03-wenwin/src/VRFv2RNSource.sol
  
-    3 : pragma solidity ^0.8.7;
+     3 : pragma solidity ^0.8.7;
 
 FILE : 2023-03-wenwin/src/staking/Staking.sol
 
-  3: pragma solidity 0.8.19;
+   3: pragma solidity 0.8.19;
 
 (https://github.com/code-423n4/2023-03-wenwin/blob/91b89482aaedf8b8feb73c771d11c257eed997e8/src/staking/Staking.sol#L3)
 
 ##
 
 ### [4] FOR FUNCTIONS, FOLLOW SOLIDITY STANDARD NAMING CONVENTIONS
+
+FINDINGS TYPE: NON CRITICAL
 
 Description
 The bellow codes don’t follow Solidity’s standard naming convention,
@@ -185,11 +198,11 @@ FILE : 2023-03-wenwin/src/Lottery.sol
 
 (https://github.com/code-423n4/2023-03-wenwin/blob/91b89482aaedf8b8feb73c771d11c257eed997e8/src/Lottery.sol#L181-L187)
 
-  
-
 ##
 
 ### [5] NOT USING THE NAMED RETURN VARIABLES ANYWHERE IN THE FUNCTION IS CONFUSING
+
+FINDINGS TYPE : NON CRITICAL
 
 FILE: 2023-03-wenwin/src/VRFv2RNSource.sol
 
@@ -219,6 +232,8 @@ FILE: 2023-03-wenwin/src/VRFv2RNSource.sol
 
 ### [6]  MISSING CHECKS FOR ADDRESS(0X0) WHEN ASSIGNING VALUES TO ADDRESS STATE VARIABLES
 
+FINDINGS TYPE : LOW
+
 FILE : 2023-03-wenwin/src/staking/StakedTokenLock.sol
 
      18: stakedToken = IStaking(_stakedToken);
@@ -232,9 +247,15 @@ FILE : 2023-03-wenwin/src/RNSourceBase.sol
     }
 (https://github.com/code-423n4/2023-03-wenwin/blob/91b89482aaedf8b8feb73c771d11c257eed997e8/src/RNSourceBase.sol#L11-L13)
 
+Recommended Mitigation:
+
+Check address(0) before assigning to state varibales 
+
 ##
 
 ### [7] LACK OF CHECKS THE INTEGER RANGES
+
+FINDINGS TYPE : LOW
 
 The following methods lack of input validations for _depositDeadline and _lockDuration before assigning to state variables. 
 
@@ -288,6 +309,8 @@ Recommended mitigations:
 
 ### [8] LOSS OF PRECISION DUE TO ROUNDING
 
+FINDINGS TYPE : LOW
+
 FILE : 2023-03-wenwin/src/staking/Staking.sol
 
      62 : return balanceOf(account) * (rewardPerToken() - userRewardPerTokenPaid[account]) / 1e18 + 
@@ -323,6 +346,8 @@ FILE : 2023-03-wenwin/src/LotteryMath.sol
 ##
 
 ### [9]  CONSTANTS SHOULD BE DEFINED RATHER THAN USING MAGIC NUMBERS
+
+FINDINGS TYPE : NON CRITICAL
 
   It is bad practice to use numbers directly in code without explanation
 
@@ -369,6 +394,8 @@ FILE : 2023-03-wenwin/src/ReferralSystem.sol
 
 ### [10] NATSPEC COMMENTS SHOULD BE INCREASED IN CONTRACTS
 
+FINDINGS TYPE : NON CRITICAL
+
 It is recommended that Solidity contracts are fully annotated using NatSpec for all public interfaces (everything in the ABI). It is clearly stated in the Solidity official documentation.
 In complex projects such as Defi, the interpretation of all functions and their arguments and returns is important for code readability and auditability.
 (https://docs.soliditylang.org/en/v0.8.15/natspec-format.html)
@@ -379,6 +406,8 @@ NatSpec comments should be increased in Contracts
 ##
 
 ### [11] NATSPEC IS MISSING
+
+FINDINGS TYPE : NON CRITICAL
 
 Description
 NatSpec is missing for the following functions ,constructor and modifier:
@@ -400,6 +429,8 @@ NatSpec is missing for the following functions ,constructor and modifier:
 
 ### [12] Shorter the inheritance list 
 
+FINDINGS TYPE : NON CRITICAL
+
 FILE : 2023-03-wenwin/src/Lottery.sol
 
    21: contract Lottery is ILottery, Ticket, LotterySetup, ReferralSystem, RNSourceController {
@@ -409,6 +440,8 @@ FILE : 2023-03-wenwin/src/Lottery.sol
 ##
 
 ### [13] INCLUDE RETURN PARAMETERS IN NATSPEC COMMENTS
+
+FINDINGS TYPE : NON CRITICAL
 
 (https://docs.soliditylang.org/en/v0.8.15/natspec-format.html)
 
@@ -440,6 +473,8 @@ FILE : 2023-03-wenwin/src/Lottery.sol
 ##
 ###[14] USE REQUIRE INSTEAD OF ASSERT
 
+FINDINGS TYPE : LOW
+
 Description
 Assert should not be used except for tests, require should be used.
 
@@ -468,15 +503,23 @@ FILE : 2023-03-wenwin/src/LotterySetup.sol
 
 ### [16] NON-LIBRARY/INTERFACE FILES SHOULD USE FIXED COMPILER VERSIONS, NOT FLOATING ONES
 
+FINDINGS TYPE : NON CRITICAL
+
 FILE : 2023-03-wenwin/src/staking/StakedTokenLock.sol
 
   3: pragma solidity ^0.8.17;
 
 (https://github.com/code-423n4/2023-03-wenwin/blob/91b89482aaedf8b8feb73c771d11c257eed997e8/src/staking/StakedTokenLock.sol#L3)
 
+FILE: 2023-03-wenwin/src/VRFv2RNSource.sol
+ 
+     3 : pragma solidity ^0.8.7;
+
 ##
 
 ### [17] Consider using OpenZeppelin’s SafeCast library to prevent unexpected overflows when casting from uint256,Uint8,Uint128,uint120
+
+FINDINGS TYPE : LOW
 
 FILE : 2023-03-wenwin/src/TicketUtils.sol
 
@@ -508,6 +551,8 @@ FILE : 2023-03-wenwin/src/LotteryMath.sol
 
 ### [18] A single point of failure
 
+FINDINGS TYPE : LOW
+
 Impact
 
 The onlyOwner role has a single point of failure and onlyOwner can use critical a few functions.
@@ -528,6 +573,8 @@ FILE : 2023-03-wenwin/src/staking/StakedTokenLock.sol
 
 ### [19] Missing Event for critical parameters init and change 
 
+FINDINGS TYPE : LOW
+
 FILE : 2023-03-wenwin/src/Lottery.sol
 
 constructor(
@@ -543,7 +590,7 @@ constructor(
         ReferralSystem(playerRewardFirstDraw, playerRewardDecreasePerDraw, rewardsToReferrersPerDraw)
         RNSourceController(maxRNFailedAttempts, maxRNRequestDelay)
     {
- When new Ticket, LotterySetup initialized no events called
+ When new Ticket, LotterySetup initialized no events triggered 
 
 (https://github.com/code-423n4/2023-03-wenwin/blob/91b89482aaedf8b8feb73c771d11c257eed997e8/src/Lottery.sol#L84-L108)
 
@@ -574,6 +621,8 @@ Functions should be grouped according to their visibility and ordered:
 
 ### [21] Need Fuzzing test
 
+FINDINGS TYPE : LOW
+
 FILE :2023-03-wenwin/src/TicketUtils.sol
 
   26:  unchecked {
@@ -590,6 +639,8 @@ Use should fuzzing test like Echidna.
 ##
 
 ### [22] Tokens accidentally sent to the contract cannot be recovered
+
+FINDINGS TYPE : LOW
 
 It can’t be recovered if the tokens accidentally arrive at the contract address, which has happened to many popular projects, so I recommend adding a recovery code to your critical contracts.
 
@@ -615,6 +666,8 @@ Add this code:
 ##
 
 ### [23] Use a single file for all system-wide constants
+
+FINDINGS TYPE : NON CRITICAL
 
 There are many addresses and constants used in the system. It is recommended to put the most used ones in one file (for example constants.sol, use inheritance to access these values).
 
@@ -655,7 +708,9 @@ FILE : 2023-03-wenwin/src/LotterySetup.sol
 
 ### [24] Use .call instead of .transfer to send ether
 
-The reason why call() is preferred over transfer() in some cases is that call() provides more control and flexibility, and allows for error handling and recovery in case of unexpected behavior
+FINDINGS TYPE : LOW
+
+.transfer will relay 2300 gas and .call will relay all the gas. If the receive/fallback function from the recipient proxy contract has complex logic, using .transfer will fail, causing integration issues.
 
 FILE :2023-03-wenwin/src/staking/StakedTokenLock.sol
 
@@ -667,11 +722,135 @@ FILE :2023-03-wenwin/src/staking/StakedTokenLock.sol
 
 (https://github.com/code-423n4/2023-03-wenwin/blob/91b89482aaedf8b8feb73c771d11c257eed997e8/src/staking/StakedTokenLock.sol#L55)
 
+Recommendation
+Replace .transfer with .call. Note that the result of .call need to be checked
+
 ##
 
+### [25] Uppercase immutable variables
+
+FINDINGS TYPE : NON CRITICAL
+
+(https://github.com/code-423n4/2023-03-wenwin/blob/91b89482aaedf8b8feb73c771d11c257eed997e8/src/VRFv2RNSource.sol#L10-L11)
+(https://github.com/code-423n4/2023-03-wenwin/blob/91b89482aaedf8b8feb73c771d11c257eed997e8/src/staking/StakedTokenLock.sol#L10-L14)
+(https://github.com/code-423n4/2023-03-wenwin/blob/91b89482aaedf8b8feb73c771d11c257eed997e8/src/staking/Staking.sol#L14-L16)
+(https://github.com/code-423n4/2023-03-wenwin/blob/91b89482aaedf8b8feb73c771d11c257eed997e8/src/LotterySetup.sol#L15-L21)
+(https://github.com/code-423n4/2023-03-wenwin/blob/91b89482aaedf8b8feb73c771d11c257eed997e8/src/LotterySetup.sol#L25-L34)
+(https://github.com/code-423n4/2023-03-wenwin/blob/91b89482aaedf8b8feb73c771d11c257eed997e8/src/Lottery.sol#L29)
+(https://github.com/code-423n4/2023-03-wenwin/blob/91b89482aaedf8b8feb73c771d11c257eed997e8/src/RNSourceBase.sol#L8)
+(https://github.com/code-423n4/2023-03-wenwin/blob/91b89482aaedf8b8feb73c771d11c257eed997e8/src/RNSourceController.sol#L17-L18)
+(https://github.com/code-423n4/2023-03-wenwin/blob/91b89482aaedf8b8feb73c771d11c257eed997e8/src/ReferralSystem.sol#L12-L13)
+
+##
+
+### [26]  Use delete to clear variables instead of zero assignment
+
+FINDINGS TYPE : NON CRITICAL 
+
+You can use the delete keyword instead of setting the variable as zero.
+
+File : 2023-03-wenwin/src/Lottery.sol
+
+  255:frontendDueTicketSales[beneficiary] = 0;
+
+(https://github.com/code-423n4/2023-03-wenwin/blob/91b89482aaedf8b8feb73c771d11c257eed997e8/src/Lottery.sol#L255)
+
+FILE : 2023-03-wenwin/src/RNSourceController.sol
+
+    52: failedSequentialAttempts = 0;
+    53: maxFailedAttemptsReachedAt = 0;
+
+(https://github.com/code-423n4/2023-03-wenwin/blob/91b89482aaedf8b8feb73c771d11c257eed997e8/src/RNSourceController.sol#L52-L53)
+
+   99:  failedSequentialAttempts = 0;
+   100: maxFailedAttemptsReachedAt = 0;
+
+(https://github.com/code-423n4/2023-03-wenwin/blob/91b89482aaedf8b8feb73c771d11c257eed997e8/src/RNSourceController.sol#L99-L100)
+
+#
+
+## [27] Insufficient coverage
+
+FINDINGS TYPE : NON CRITICAL
+
+Description
+The test coverage rate of the project is 39%. Testing all functions is best practice in terms of security criteria.
 
 
+ File                                                  | % Lines          | % Statements     | % Branches    
+  | % Funcs         |
+|-------------------------------------------------------|------------------|------------------|-----------------|-----------------|
+| script/Counter.s.sol                                  | 0.00% (0/1)      | 0.00% (0/1)      | 100.00% (0/0) 
+  | 0.00% (0/2)     |
+| script/DeployAll.s.sol                                | 0.00% (0/9)      | 0.00% (0/13)     | 100.00% (0/0) 
+  | 0.00% (0/2)     |
+| script/FillWithData.s.sol                             | 0.00% (0/44)     | 0.00% (0/49)     | 0.00% (0/8)   
+  | 0.00% (0/6)     |
+| script/Lottery.s.sol                                  | 0.00% (0/6)      | 0.00% (0/9)      | 100.00% (0/0) 
+  | 0.00% (0/2)     |
+| script/RNSourceConsumerMock.requestRandomNumber.s.sol | 0.00% (0/6)      | 0.00% (0/9)      | 100.00% (0/0) 
+  | 0.00% (0/2)     |
+| script/RNSourceMock.s.sol                             | 0.00% (0/5)      | 0.00% (0/7)      | 100.00% (0/0) 
+  | 0.00% (0/2)     |
+| script/TestToken.s.sol                                | 0.00% (0/4)      | 0.00% (0/5)      | 100.00% (0/0) 
+  | 0.00% (0/2)     |
+| script/VRFv2RNSource.s.sol                            | 0.00% (0/5)      | 0.00% (0/7)      | 100.00% (0/0) 
+  | 0.00% (0/2)     |
+| script/config/LotteryConfig.sol                       | 0.00% (0/3)      | 0.00% (0/5)      | 100.00% (0/0) 
+  | 0.00% (0/1)     |
+| script/config/RNSourceConfig.sol                      | 0.00% (0/7)      | 0.00% (0/11)     | 0.00% (0/2)   
+  | 0.00% (0/1)     |
+| script/config/ReferralSystemConfig.sol                | 0.00% (0/9)      | 0.00% (0/11)     | 0.00% (0/2)   
+  | 0.00% (0/1)     |
+| script/config/RewardTokenConfig.sol                   | 0.00% (0/4)      | 0.00% (0/5)      | 0.00% (0/2)   
+  | 0.00% (0/1)     |
+| src/Lottery.sol                                       | 94.20% (65/69)   | 95.06% (77/81)   | 88.89% (16/18)  | 80.00% (12/15)  |
+| src/LotteryMath.sol                                   | 14.29% (2/14)    | 15.79% (3/19)    | 0.00% (0/2)   
+  | 20.00% (1/5)    |
+| src/LotterySetup.sol                                  | 71.43% (20/28)   | 65.71% (23/35)   | 68.75% (11/16)  | 50.00% (3/6)    |
+| src/LotteryToken.sol                                  | 100.00% (3/3)    | 100.00% (3/3)    | 100.00% (2/2) 
+  | 100.00% (1/1)   |
+| src/PercentageMath.sol                                | 0.00% (0/2)      | 0.00% (0/2)      | 100.00% (0/0) 
+  | 0.00% (0/2)     |
+| src/RNSourceBase.sol                                  | 86.67% (13/15)   | 87.50% (14/16)   | 75.00% (6/8)  
+  | 100.00% (2/2)   |
+| src/RNSourceController.sol                            | 94.74% (36/38)   | 95.00% (38/40)   | 94.44% (17/18)  | 100.00% (6/6)   |
+| src/ReferralSystem.sol                                | 39.53% (17/43)   | 41.67% (20/48)   | 25.00% (6/24) 
+  | 71.43% (5/7)    |
+| src/Ticket.sol                                        | 100.00% (4/4)    | 100.00% (4/4)    | 100.00% (0/0) 
+  | 100.00% (2/2)   |
+| src/TicketUtils.sol                                   | 100.00% (24/24)  | 100.00% (37/37)  | 75.00% (3/4)  
+  | 100.00% (3/3)   |
+| src/VRFv2RNSource.sol                                 | 100.00% (4/4)    | 100.00% (4/4)    | 100.00% (2/2) 
+  | 100.00% (2/2)   |
+| src/staking/StakedTokenLock.sol                       | 100.00% (10/10)  | 100.00% (10/10)  | 100.00% (4/4) 
+  | 100.00% (3/3)   |
+| src/staking/Staking.sol                               | 100.00% (36/36)  | 100.00% (39/39)  | 91.67% (11/12)  | 87.50% (7/8)    |
+| test/LotteryTestBase.sol                              | 0.00% (0/41)     | 0.00% (0/50)     | 0.00% (0/2)   
+  | 0.00% (0/4)     |
+| test/RNSource.sol                                     | 83.33% (5/6)     | 83.33% (5/6)     | 66.67% (4/6)  
+  | 66.67% (2/3)    |
+| test/RNSourceBase.t.sol                               | 100.00% (3/3)    | 100.00% (3/3)    | 100.00% (0/0) 
+  | 75.00% (3/4)    |
+| test/RNSourceConsumerMock.sol                         | 0.00% (0/2)      | 0.00% (0/2)      | 100.00% (0/0) 
+  | 0.00% (0/2)     |
+| test/RNSourceControllerMock.sol                       | 100.00% (1/1)    | 100.00% (1/1)    | 100.00% (0/0) 
+  | 50.00% (1/2)    |
+| test/TestHelpers.sol                                  | 0.00% (0/26)     | 0.00% (0/34)     | 0.00% (0/22)  
+  | 0.00% (0/3)     |
+| test/TestToken.sol                                    | 100.00% (1/1)    | 100.00% (1/1)    | 100.00% (0/0) 
+  | 100.00% (1/1)   |
+| test/echidna/LotteryEchidna.sol                       | 0.00% (0/109)    | 0.00% (0/142)    | 0.00% (0/34)  
+  | 0.00% (0/18)    |
+| test/echidna/LotteryEchidnaProperty.sol               | 0.00% (0/6)      | 0.00% (0/6)      | 100.00% (0/0) 
+  | 0.00% (0/6)     |
+| test/echidna/RNSourceEchidna.sol                      | 0.00% (0/5)      | 0.00% (0/4)      | 0.00% (0/4)   
+  | 0.00% (0/2)     |
+| test/echidna/StakingEchidna.sol                       | 0.00% (0/40)     | 0.00% (0/57)     | 0.00% (0/16)  
+  | 0.00% (0/7)     |
+| Total                                                 | 38.55% (244/633) | 36.34% (282/776) | 39.42% (82/208) | 39.13% (54/138) |
 
+Due to its capacity, test coverage is expected to be 100%.
     
 
 
@@ -685,6 +864,4 @@ FILE :2023-03-wenwin/src/staking/StakedTokenLock.sol
 
 
 
-NC-1	Typos	63
-L-1	Empty Function Body - Consider commenting why	1
-L-2	Unsafe ERC20 operation(s)	3
+
