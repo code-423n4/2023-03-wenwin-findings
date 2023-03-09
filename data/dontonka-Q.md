@@ -1,6 +1,22 @@
 Some changes were already made, tests are still happy with those.
 
 ```diff
+diff --git a/src/Lottery.sol b/src/Lottery.sol
+index 28d3477..833ea1a 100644
+--- a/src/Lottery.sol
++++ b/src/Lottery.sol
+@@ -161,7 +161,7 @@ contract Lottery is ILottery, Ticket, LotterySetup, ReferralSystem, RNSourceCont
+         if (!ticketInfo.claimed) {
+             uint120 _winningTicket = winningTicket[ticketInfo.drawId];
+             winTier = TicketUtils.ticketWinTier(ticketInfo.combination, _winningTicket, selectionSize, selectionMax);
+-            if (block.timestamp <= ticketRegistrationDeadline(ticketInfo.drawId + LotteryMath.DRAWS_PER_YEAR)) {
++            if (block.timestamp <= ticketRegistrationDeadline(ticketInfo.drawId + LotteryMath.DRAWS_PER_YEAR)) { //@audit (QA) documentation claims ticket holder can claim until 1 year, but ticketRegistrationDeadline does substract drawCoolDownPeriod, so in reality its a little less then one year.
+                 claimableAmount = winAmount[ticketInfo.drawId][winTier];
+             }
+         }
+```
+
+```diff
 diff --git a/src/LotteryMath.sol b/src/LotteryMath.sol
 index e3dee3e..b5a92d4 100644
 --- a/src/LotteryMath.sol
