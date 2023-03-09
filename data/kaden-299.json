@@ -1,0 +1,8 @@
+{
+  "contest": 218,
+  "handle": "kaden",
+  "risk": "3",
+  "title": "Staking contract can be drained by staking and exiting with many accounts",
+  "issueId": 299,
+  "issueUrl": "https://github.com/code-423n4/2023-03-wenwin-findings/issues/299"
+}
