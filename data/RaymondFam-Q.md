@@ -107,3 +107,26 @@ type declarations, state variables, events, modifiers, functions
 
 Consider adhering to the above guidelines for all contract instances entailed.
 
+## Use of Chainlink keeper
+Consider implementing Chainlink keeper to automate all random number requests when it comes to drawing time. This will  make the system even more hyperstructured and avoid human and/or bot errors in keeping the weekly draw on exact schedules.
+
+## Automated Chainlink funding
+Consider implementing a self funding logic in the contracts that will weekly/periodically take a tiny cut from the ticket sale swapping it to `LINK` and funding the Chainlink account that supports the VRF services to the system. This will help prevent unnecessary disruption of service in the event the account has indeed run low in balance due to unintended negligence in topping up `LINK` for continued subscription. Document this comparably small fee structure to keep all parties abreast where possible.  
+
+## NatSpec comments   
+Solidity contracts can use a special form of comments, i.e., the Ethereum Natural Language Specification Format (NatSpec) to provide rich documentation for functions, return variables and more. Please visit the following link for further details:
+
+https://docs.soliditylang.org/en/v0.8.16/natspec-format.html
+
+The protocol has done a tremendous job providing detailed NatSpec across the codebase. Nevertheless, this can be more fully equipped in facilitating users/developers interacting with the protocol's smart contracts.
+
+For instance, the function below could take in a complete set of NatSpec comments, i.e. `@param` and `@return` like its all other counterparts:
+
+[File: PercentageMath.sol#L21-L24](https://github.com/code-423n4/2023-03-wenwin/blob/main/src/PercentageMath.sol#L21-L24)
+
+```solidity
+    /// @dev Calculates percentage of signed number. See `getPercentage`.
+    function getPercentageInt(int256 number, uint256 percentage) internal pure returns (int256 result) {
+        return number * int256(percentage) / int256(PERCENTAGE_BASE);
+    }
+```
