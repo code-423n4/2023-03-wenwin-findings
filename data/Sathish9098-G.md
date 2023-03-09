@@ -535,13 +535,3 @@ FILE :2023-03-wenwin/src/staking/StakedTokenLock.sol
 
 
 
-GAS-1	Using bools for storage incurs overhead	2
-GAS-2	Cache array length outside of loop	3
-GAS-3	Don't initialize variables with default value	9
-GAS-4	Pre-increments and pre-decrements are cheaper than post-increments and post-decrements	4
-GAS-5	Using private rather than public for constants, saves gas	9
-GAS-6	Use shift Right/Left instead of division/multiplication if possible	3
-GAS-7	Incrementing with a smaller type than uint256 incurs overhead	5
-GAS-8	Use storage instead of memory for structs/arrays	4
-GAS-9	Increments can be unchecked in for-loops	11
-GAS-10	Use != 0 instead of > 0 for unsigned integer comparison	12
