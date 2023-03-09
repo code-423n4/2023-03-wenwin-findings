@@ -1,0 +1,8 @@
+{
+  "contest": 218,
+  "handle": "0x52",
+  "risk": "3",
+  "title": "executeDraw doesn't return non-jackpot claims to the prize pool",
+  "issueId": 303,
+  "issueUrl": "https://github.com/code-423n4/2023-03-wenwin-findings/issues/303"
+}
