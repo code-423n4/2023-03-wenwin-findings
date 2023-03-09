@@ -1,0 +1,8 @@
+{
+  "contest": 218,
+  "handle": "Cyfrin",
+  "risk": "3",
+  "title": "Some rewards might be locked inside the staking contract forever",
+  "issueId": 322,
+  "issueUrl": "https://github.com/code-423n4/2023-03-wenwin-findings/issues/322"
+}
