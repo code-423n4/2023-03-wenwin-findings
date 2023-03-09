@@ -1,0 +1,8 @@
+{
+  "contest": 218,
+  "handle": "Cyfrin",
+  "risk": "3",
+  "title": "`LotteryMath.calculateNewProfit` returns wrong profit when there is no jackpot winner",
+  "issueId": 324,
+  "issueUrl": "https://github.com/code-423n4/2023-03-wenwin-findings/issues/324"
+}
