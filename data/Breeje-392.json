@@ -1,0 +1,8 @@
+{
+  "contest": 218,
+  "handle": "Breeje",
+  "risk": "3",
+  "title": "Miners or Validators can potentially manipulate randomness generation when `maxRequestDelay` is low",
+  "issueId": 392,
+  "issueUrl": "https://github.com/code-423n4/2023-03-wenwin-findings/issues/392"
+}
