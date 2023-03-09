@@ -7,9 +7,10 @@
 | :-------------: |:-------------|:-------------:|:-------------:|
 | 1 | `fulfillRandomWords` should never revert | Low | 1 |
 | 2 | randomness should not be requested multiple times | Low | 1 |
-| 3 | Immutable state variables lack zero address checks | Low | 2 |
-| 4 | `require` should be used instead of `assert` | NC | 2  |
-| 5 | Named return variables not used anywhere in the functions | NC | 5 |
+| 3 | `getMinimumEligibleReferralsFactorCalculation` should use `<=` instead of `<` | Low | 1 |
+| 4 | Immutable state variables lack zero address checks | Low | 2 |
+| 5 | `require` should be used instead of `assert` | NC | 2  |
+| 6 | Named return variables not used anywhere in the functions | NC | 5 |
 
 ## Findings
 
@@ -36,12 +37,19 @@ The check statement inside the `fulfillRandomWords` should be removed to avoid t
 
 #### Risk : Low
 
-In the RNSourceController contract a logic is implemented to re-request randomness from the Chainlink VRF in case the first calls failed but this is warned againest in the Chainlink [documentation](https://docs.chain.link/vrf/v2/security#do-not-re-request-randomness) and can potentially introduce an attack surfaces that can impact the protocol working.
+In the RNSourceController contract a logic is implemented to re-request randomness from the Chainlink VRF in case the first calls failed but this is warned against in the Chainlink [documentation](https://docs.chain.link/vrf/v2/security#do-not-re-request-randomness) and can potentially introduce an attack surfaces that can impact the protocol working.
 
-This issue should be reviewed by the protocol devs to make sure that their concepts work perfectely and does not have weaknesses or attacking areas.
+This issue should be reviewed by the protocol devs to make sure that their concepts work perfectly and does not have weaknesses or attacking areas.
 
 
-### 3- Immutable state variables lack zero address checks  :
+### 3- `getMinimumEligibleReferralsFactorCalculation` should use `<=` instead of `<`:
+
+#### Risk : Low
+
+In the RNSourceController contract the function `getMinimumEligibleReferralsFactorCalculation` should use the operator `<=` in the if-statements comparison instead of the operator `<` as it is highlighted in the referrals [documentation](https://docs.wenwin.com/wenwin-lottery/protocol-architecture/token/rewards/referrals), even though the difference between the two operators is very small in this case this can still cause some referrer to get the wrong factor calculation and will create some confusion.
+
+
+### 4- Immutable state variables lack zero address checks  :
 
 Constructors should check the values written in an immutable state variables(address) is not the zero address (address(0))
 
@@ -63,7 +71,7 @@ authorizedConsumer = _authorizedConsumer;
 #### Mitigation
 Add non-zero address checks in the constructors for the instances aforementioned.
 
-### 4- `require` should be used instead of `assert` :
+### 5- `require` should be used instead of `assert` :
 
 Prior to solidity version 0.8.0, hitting an assert consumes the remainder of the transaction’s available gas rather than returning it, as `require()/revert()` do. `assert()` should be avoided even past solidity version 0.8.0 as its [documentation](https://docs.soliditylang.org/en/v0.8.14/control-structures.html#panic-via-assert-and-error-via-require) states that “The assert function creates an error of type Panic(uint256). … Properly functioning code should never create a Panic, not even on invalid external input. If this happens, then there is a bug in your contract which you should fix”.
 
@@ -86,7 +94,7 @@ assert((winTier <= selectionSize) && (intersection == uint256(0)));
 Replace the `assert` checks aforementioned with `require` statements.
 
 
-### 5- Named return variables not used anywhere in the function :
+### 6- Named return variables not used anywhere in the function :
 
 When Named return variable are declared they should be used inside the function instead of the return statement or if not they should be removed to avoid confusion.
 
