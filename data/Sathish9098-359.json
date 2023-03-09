@@ -1,0 +1,8 @@
+{
+  "contest": 218,
+  "handle": "Sathish9098",
+  "risk": "2",
+  "title": "Unsafe downcasting operation truncate numberOfTickets input",
+  "issueId": 359,
+  "issueUrl": "https://github.com/code-423n4/2023-03-wenwin-findings/issues/359"
+}
