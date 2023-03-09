@@ -90,84 +90,227 @@
 |[G-07]| Using immutable for uint & address for save gas | ALL CONTRACT |
 |[G-08]| internal functions not called by the contract should be removed to save deployment gas | 3 |
 |[G-09]| State variables can be packed into fewer storage slots  | 1 |
+|[G-10]| x = x + y is cheaper than x += y;  | 1 |
+|[G-11]| Usage of uints/ints smaller than 32 bytes (256 bits) incurs overhead  | ALL CONTRACT |
+|[G-12]| Using > 0 costs more gas than != 0 when used on a uint in a require() statement  | 2 |
+|[G-13]| >= costs less gas than >  | 5 |
 
-Total 40 issues
+Total 45 issues
 
 ## [G-01] Using unchecked blocks to save gas
 
 Solidity version 0.8+ comes with implicit overflow and underflow checks on unsigned integers. When an overflow or an underflow isn’t possible (as an example, when a comparison is made before the arithmetic operation), some gas can be saved by using an unchecked block
 https://github.com/ethereum/solidity/issues/10695
 
+Gas Saved For Using unchecked blocks to save gas
+``` diff
+| src/Lottery.sol:Lottery contract |                 |       |        |        |         |
+|----------------------------------|-----------------|-------|--------|--------|---------|
+| Deployment Cost                  | Deployment Size |       |        |        |         |
++| 8114269                          | 38487           |       |        |        |         |
+| Function Name                    | min             | avg   | median | max    | # calls |
+| buyTickets                       | 1959            | 81244 | 56048  | 527138 | 214     |
+| claimRewards                     | 7731            | 41973 | 51531  | 51531  | 11      |
+| claimWinningTickets              | 1009            | 15146 | 15800  | 30605  | 6       |
+| claimable                        | 794             | 2715  | 2732   | 4732   | 167     |
+| currentDraw                      | 504             | 659   | 504    | 2504   | 206     |
+| executeDraw                      | 467             | 8627  | 5920   | 51000  | 114     |
+| finalizeInitialPotRaise          | 418             | 23607 | 24520  | 24520  | 27      |
+| fixedReward                      | 527             | 1574  | 633    | 4506   | 4       |
+| initSource                       | 24075           | 24075 | 24075  | 24075  | 25      |
+| initialPot                       | 405             | 405   | 405    | 405    | 1       |
+| initialPotDeadline               | 263             | 263   | 263    | 263    | 27      |
+| jackpotBound                     | 329             | 329   | 329    | 329    | 3       |
+| minInitialPot                    | 262             | 262   | 262    | 262    | 1       |
+| nativeToken                      | 327             | 327   | 327    | 327    | 35      |
+| nextTicketId                     | 385             | 626   | 385    | 2385   | 58      |
+| onRandomNumberFulfilled          | 72115           | 96452 | 92943  | 173645 | 112     |
+| stakingRewardRecipient           | 307             | 307   | 307    | 307    | 11      |
+| ticketPrice                      | 330             | 330   | 330    | 330    | 35      |
+| unclaimedRewards                 | 845             | 1207  | 874    | 2904   | 6       |
+| winAmount                        | 749             | 749   | 749    | 749    | 2       |
+| winningTicket                    | 649             | 649   | 649    | 649    | 2       |
+
+
+| src/staking/Staking.sol:Staking contract |                 |        |        |        |         |
+|------------------------------------------|-----------------|--------|--------|--------|---------|
+| Deployment Cost                          | Deployment Size |        |        |        |         |
++| 1157109                                  | 6909            |        |        |        |         |
+| Function Name                            | min             | avg    | median | max    | # calls |
+| approve                                  | 24696           | 24696  | 24696  | 24696  | 1       |
+| earned                                   | 3083            | 3083   | 3083   | 3083   | 5       |
+| exit                                     | 156752          | 156752 | 156752 | 156752 | 1       |
+| getReward                                | 6619            | 75282  | 67849  | 131529 | 7       |
+| stake                                    | 396             | 67138  | 72167  | 82908  | 10      |
+| transfer                                 | 121178          | 121178 | 121178 | 121178 | 1       |
+| transferFrom                             | 115028          | 115028 | 115028 | 115028 | 1       |
+
+```
+
 There are 16 instances of this issue:
 
 The above should be modified to:
+
+
 ``` diff
 Lottery.sol
-+279:             unchecked {
-280:             currentNetProfit += int256(unclaimedJackpotTickets * winAmount[drawId][selectionSize]);
-+281:             }
+144:     function unclaimedRewards(LotteryRewardType rewardType) external view override returns (uint256 rewards) {
++145:           unchecked{
+146:         uint256 dueTicketsSold = (rewardType == LotteryRewardType.FRONTEND)
+147:             ? frontendDueTicketSales[msg.sender]
+148:             : nextTicketId - claimedStakingRewardAtTicketId;
+149:         rewards = LotteryMath.calculateRewards(ticketPrice, dueTicketsSold, rewardType);
+150:           }
+151:     }
+
+Lottery.sol
++195:        unchecked{
+196:         unclaimedCount[drawId][ticket]++;
+197:         ticketsSold[drawId]++;
+198:         }
 
 
 Lottery.sol
-+253:             unchecked {
-254:             dueTickets = nextTicketId - claimedStakingRewardAtTicketId;
-255:             claimedStakingRewardAtTicketId = nextTicketId;
-+256:             }
+207: function receiveRandomNumber(uint256 randomNumber) internal override onlyWhenExecutingDraw {
+208:         uint120 _winningTicket = TicketUtils.reconstructTicket(randomNumber, selectionSize, selectionMax);
+209:         uint128 drawFinalized = currentDraw++;
+210:         uint256 jackpotWinners = unclaimedCount[drawFinalized][_winningTicket];
+211: 
+212:         if (jackpotWinners > 0) {
++213:                 unchecked { 
+214:             winAmount[drawFinalized][selectionSize] = drawRewardSize(drawFinalized, selectionSize) / jackpotWinners;
+215:                 }
+216:         } else {
+
 
 Lottery.sol
-+194:         unchecked {
-195:         unclaimedCount[drawId][ticket]++;
-196:         ticketsSold[drawId]++;
-+197:         }
+257:  function dueTicketsSoldAndReset(address beneficiary) private returns (uint256 dueTickets) {
+258:         if (beneficiary == stakingRewardRecipient) {
++259:             unchecked{ 
+260:             dueTickets = nextTicketId - claimedStakingRewardAtTicketId;
+261:             claimedStakingRewardAtTicketId = nextTicketId;
+262:             }
+
+
+Lottery.sol
+269: function claimWinningTicket(uint256 ticketId) private onlyTicketOwner(ticketId) returns (uint256 claimedAmount) {
+270:         uint256 winTier;
+271:         (claimedAmount, winTier) = this.claimable(ticketId);
+272:         if (claimedAmount == 0) {
+273:             revert NothingToClaim(ticketId);
+274:         }
++275:         unchecked{ 
+276:         unclaimedCount[ticketsInfo[ticketId].drawId][ticketsInfo[ticketId].combination]--;
+277:         }
+
 
 LotteryMath.sol
-+84:             unchecked {
-85:             bonusMulti += (excessPot * EXCESS_BONUS_ALLOCATION) / (ticketsSold * expectedPayout);
-+86:             }
+35:  function calculateNewProfit(
+36:         int256 oldProfit,
+37:         uint256 ticketsSold,
+38:         uint256 ticketPrice,
+39:         bool jackpotWon,
+40:         uint256 fixedJackpotSize,
+41:         uint256 expectedPayout
+42:     )
+43:         internal
+44:         pure
+45:         returns (int256 newProfit)
+46:     {
+47:         
+48:         uint256 ticketsSalesToPot = (ticketsSold * ticketPrice).getPercentage(TICKET_PRICE_TO_POT);
++49:         unchecked{ 
+50:         newProfit = oldProfit + int256(ticketsSalesToPot);
+51:         }
+
+LotteryMath.sol
+63: 
+64:     function calculateExcessPot(int256 netProfit, uint256 fixedJackpotSize) internal pure returns (uint256 excessPot) {
+65:         int256 excessPotInt = netProfit.getPercentageInt(SAFETY_MARGIN);
+66:         excessPotInt -= int256(fixedJackpotSize);
++67:         unchecked{ 
+68:         excessPot = excessPotInt > 0 ? uint256(excessPotInt) : 0;
+69:         }
+70:     }
 
 
 LotteryMath.sol
-+130:         unchecked {
-131:         uint256 rewardPercentage = (rewardType == LotteryRewardType.FRONTEND) ? FRONTEND_REWARD : STAKING_REWARD;
-132:         dueRewards = (ticketsSold * ticketPrice).getPercentage(rewardPercentage);
-+133:         }
+123:  function calculateRewards(
+124:         uint256 ticketPrice,
+125:         uint256 ticketsSold,
+126:         LotteryRewardType rewardType
+127:     )
+128:         internal
+129:         pure
+130:         returns (uint256 dueRewards)
+131:     {
+132:         uint256 rewardPercentage = (rewardType == LotteryRewardType.FRONTEND) ? FRONTEND_REWARD : STAKING_REWARD;
++133:         unchecked{ 
+134:         dueRewards = (ticketsSold * ticketPrice).getPercentage(rewardPercentage);
+135:         }
+136:     }
 
-
-LotterySetup.sol
-120:     function fixedReward(uint8 winTier) public view override returns (uint256 amount) {
-121:         if (winTier == selectionSize) {
-122:             return _baseJackpot(initialPot);
-123:         } else if (winTier == 0 || winTier > selectionSize) {
-124:             return 0;
-125:         } else {
-+126:             unchecked {
-127:             uint256 mask = uint256(type(uint16).max) << (winTier * 16);
-128:             uint256 extracted = (nonJackpotFixedRewards & mask) >> (winTier * 16);
-129:             return extracted * (10 ** (IERC20Metadata(address(rewardToken)).decimals() - 1));
-+130:             }
-131:         }
-132:     }
 
 
 LotterySetup.sol
-154:     function drawScheduledAt(uint128 drawId) public view override returns (uint256 time) {
-+155:         unchecked {
-156:         time = firstDrawSchedule + (drawId * drawPeriod);
-157:         }
-+158:     }
-159: 
+152:  function drawScheduledAt(uint128 drawId) public view override returns (uint256 time) {
++153:         unchecked{
+154:         time = firstDrawSchedule + (drawId * drawPeriod);
+155:         }
+156:     }
 
 
 LotterySetup.sol
-160:     function ticketRegistrationDeadline(uint128 drawId) public view override returns (uint256 time) {
-+161:         unchecked {
-162:         time = drawScheduledAt(drawId) - drawCoolDownPeriod;
-+163:         }
-164:     }
+158: function ticketRegistrationDeadline(uint128 drawId) public view override returns (uint256 time) {
++159:         unchecked{  
+160:         time = drawScheduledAt(drawId) - drawCoolDownPeriod;
+161:         }
+162:     }
+
+
+PercentageMath.sol
+17:     function getPercentage(uint256 number, uint256 percentage) internal pure returns (uint256 result) {
++18:         unchecked{  
+19:         return number * percentage / PERCENTAGE_BASE;
+20:         }
+21:     }
+
+
+PercentageMath.sol
+24:     function getPercentageInt(int256 number, uint256 percentage) internal pure returns (int256 result) {
++25:               unchecked{  
+26:         return number * int256(percentage) / int256(PERCENTAGE_BASE);
+27:               }
+28:     }
+
+staking\Staking.sol
+62:     function earned(address account) public view override returns (uint256 _earned) {
++63:         unchecked {
+64:         return balanceOf(account) * (rewardPerToken() - userRewardPerTokenPaid[account]) / 1e18 + rewards[account];
+65:         }
+66:     }
+
+
+staking\Staking.sol
+62:     function earned(address account) public view override returns (uint256 _earned) {
++63:         unchecked {
+64:         return balanceOf(account) * (rewardPerToken() - userRewardPerTokenPaid[account]) / 1e18 + rewards[account];
+65:         }
+66:     }
+
+
+Ticket.sol
+23:     function mint(address to, uint128 drawId, uint120 combination) internal returns (uint256 ticketId) {
++24:         unchecked{
+25:         ticketId = nextTicketId++;
+26:         }
+27:         ticketsInfo[ticketId] = TicketInfo(drawId, combination, false);
+28:         _mint(to, ticketId);
+29:     }
 
 
 ReferralSystem.sol
-52:    function referralRegisterTickets(
+52:  function referralRegisterTickets(
 53:         uint128 currentDraw,
 54:         address referrer,
 55:         address player,
@@ -177,170 +320,22 @@ ReferralSystem.sol
 59:     {
 60:         if (referrer != address(0)) {
 61:             uint256 minimumEligible = minimumEligibleReferrals[currentDraw];
-62:             if (unclaimedTickets[currentDraw][referrer].referrerTicketCount + numberOfTickets >= minimumEligible) {
-63:                 if (unclaimedTickets[currentDraw][referrer].referrerTicketCount < minimumEligible) {
-+64:                     unchecked{
-65:                     totalTicketsForReferrersPerDraw[currentDraw] +=
-66:                         unclaimedTickets[currentDraw][referrer].referrerTicketCount;
-+67:                     }
++62:             unchecked {
+63:             if (unclaimedTickets[currentDraw][referrer].referrerTicketCount + numberOfTickets >= minimumEligible) {
+64:             }
+65:                 if (unclaimedTickets[currentDraw][referrer].referrerTicketCount < minimumEligible) {
+66:                     totalTicketsForReferrersPerDraw[currentDraw] +=
+67:                         unclaimedTickets[currentDraw][referrer].referrerTicketCount;
 68:                 }
-+69:                 unchecked{
-70:                 totalTicketsForReferrersPerDraw[currentDraw] += numberOfTickets;
-+71:                 }
-72:             }
-+73:             unchecked{
-74:             unclaimedTickets[currentDraw][referrer].referrerTicketCount += uint128(numberOfTickets);
-+75:             }
-76:         }
-+77:         unchecked{ 
-78:         unclaimedTickets[currentDraw][player].playerTicketCount += uint128(numberOfTickets);
-+79:         }
-80:     }
-81: 
+69:                 totalTicketsForReferrersPerDraw[currentDraw] += numberOfTickets;
+70:             }
+71:             unclaimedTickets[currentDraw][referrer].referrerTicketCount += uint128(numberOfTickets);
+72:         }
+73:         unclaimedTickets[currentDraw][player].playerTicketCount += uint128(numberOfTickets);
+74:     }
 
-
-
-ReferralSystem.sol
-87:     function referralDrawFinalize(uint128 drawFinalized, uint256 ticketsSoldDuringDraw) internal {
-        // if no tickets sold there is no incentives, so no rewards to be set
-        if (ticketsSoldDuringDraw == 0) {
-            return;
-        }
-
-        minimumEligibleReferrals[drawFinalized + 1] =
-            getMinimumEligibleReferralsFactorCalculation(ticketsSoldDuringDraw);
-
-        uint256 referrerRewardForDraw = referrerRewardsPerDraw(drawFinalized);
-        uint256 totalTicketsForReferrersPerCurrentDraw = totalTicketsForReferrersPerDraw[drawFinalized];
-        if (totalTicketsForReferrersPerCurrentDraw > 0) {
-+            unchecked{ 
-            referrerRewardPerDrawForOneTicket[drawFinalized] =
-                referrerRewardForDraw / totalTicketsForReferrersPerCurrentDraw;
-+            }
-        }
-
-        uint256 playerRewardForDraw = playerRewardsPerDraw(drawFinalized);
-        if (playerRewardForDraw > 0) {
-+            unchecked{  
-            playerRewardsPerDrawForOneTicket[drawFinalized] = playerRewardForDraw / ticketsSoldDuringDraw;
-+            }
-        }
-
-        emit CalculatedRewardsForDraw(drawFinalized, referrerRewardForDraw, playerRewardForDraw);
-    }
-
-
-ReferralSystem.sol
-136:     function claimPerDraw(uint128 drawId) private returns (uint256 claimedReward) {
-        requireFinishedDraw(drawId);
-
-        UnclaimedTicketsData memory _unclaimedTickets = unclaimedTickets[drawId][msg.sender];
-        if (_unclaimedTickets.referrerTicketCount >= minimumEligibleReferrals[drawId]) {
-+            unchecked{
-            claimedReward = referrerRewardPerDrawForOneTicket[drawId] * _unclaimedTickets.referrerTicketCount;
-            unclaimedTickets[drawId][msg.sender].referrerTicketCount = 0;
-+            }
-        }
-
-        _unclaimedTickets = unclaimedTickets[drawId][msg.sender];
-        if (_unclaimedTickets.playerTicketCount > 0) {
-+            unchecked{
-            claimedReward += playerRewardsPerDrawForOneTicket[drawId] * _unclaimedTickets.playerTicketCount;
-            unclaimedTickets[drawId][msg.sender].playerTicketCount = 0;
-+            }
-        }
-
-        if (claimedReward > 0) {
-            emit ClaimedReferralReward(drawId, msg.sender, claimedReward);
-        }
-    }
-
-
-ReferralSystem.sol
-156:     function playerRewardsPerDraw(uint128 drawId) internal view returns (uint256 rewards) {
-+        unchecked{
-        uint256 decrease = uint256(drawId) * playerRewardDecreasePerDraw;
-        return playerRewardFirstDraw > decrease ? (playerRewardFirstDraw - decrease) : 0;           
-+        }
-    }
 ```
 
-## Gas Saved For Using unchecked blocks to save gas
-| src/Lottery.sol:Lottery contract |                 |       |        |        |         |
-|----------------------------------|-----------------|-------|--------|--------|---------|
-| Deployment Cost                  | Deployment Size |       |        |        |         |
-| 8099250                          | 38412           |       |        |        |         |
-| Function Name                    | min             | avg   | median | max    | # calls |
-| buyTickets                       | 1959            | 85784 | 64754  | 529265 | 174     |
-| claimRewards                     | 7822            | 42061 | 51622  | 51622  | 11      |
-| claimWinningTickets              | 1009            | 15211 | 15849  | 30800  | 6       |
-| claimable                        | 794             | 2715  | 2732   | 4732   | 167     |
-| currentDraw                      | 504             | 696   | 504    | 2504   | 166     |
-| executeDraw                      | 467             | 8624  | 5920   | 51000  | 114     |
-| finalizeInitialPotRaise          | 2871            | 23687 | 24520  | 24520  | 26      |
-| fixedReward                      | 527             | 1655  | 550    | 3889   | 3       |
-| initSource                       | 24075           | 24075 | 24075  | 24075  | 25      |
-| initialPotDeadline               | 263             | 263   | 263    | 263    | 27      |
-| jackpotBound                     | 329             | 329   | 329    | 329    | 1       |
-| minInitialPot                    | 262             | 262   | 262    | 262    | 1       |
-| nativeToken                      | 327             | 327   | 327    | 327    | 35      |
-| nextTicketId                     | 385             | 626   | 385    | 2385   | 58      |
-| onRandomNumberFulfilled          | 73572           | 96993 | 93470  | 173169 | 112     |
-| stakingRewardRecipient           | 307             | 307   | 307    | 307    | 11      |
-| ticketPrice                      | 330             | 330   | 330    | 330    | 35      |
-| unclaimedRewards                 | 937             | 1335  | 1002   | 3067   | 6       |
-| winAmount                        | 749             | 749   | 749    | 749    | 2       |
-| winningTicket                    | 649             | 649   | 649    | 649    | 2       |
-
-
-| src/LotteryToken.sol:LotteryToken contract  |                 |       |        |       |         |
-|---------------------------------------------|-----------------|-------|--------|-------|---------|
-| Deployment Cost                             | Deployment Size |       |        |       |         |
-| 607209                                      | 3378            |       |        |       |         |
-| Function Name                               | min             | avg   | median | max   | # calls |
-| INITIAL_SUPPLY                              | 240             | 240   | 240    | 240   | 28      |
-| approve(address,uint256)                    | 24651           | 24651 | 24651  | 24651 | 2       |
-| approve(address,uint256)(bool)              | 24651           | 24651 | 24651  | 24651 | 7       |
-| balanceOf                                   | 585             | 585   | 585    | 585   | 5       |
-| mint                                        | 427             | 25864 | 29568  | 29568 | 11      |
-| totalSupply                                 | 349             | 1015  | 349    | 2349  | 3       |
-| transfer                                    | 18413           | 19902 | 20013  | 20013 | 29      |
-| transferFrom(address,address,uint256)       | 4623            | 13383 | 13383  | 22143 | 2       |
-| transferFrom(address,address,uint256)(bool) | 4623            | 19640 | 22143  | 22143 | 7       |
-
-
-| src/VRFv2RNSource.sol:VRFv2RNSource contract |                 |       |        |       |         |
-|----------------------------------------------|-----------------|-------|--------|-------|---------|
-| Deployment Cost                              | Deployment Size |       |        |       |         |
-| 428653                                       | 2646            |       |        |       |         |
-| Function Name                                | min             | avg   | median | max   | # calls |
-| rawFulfillRandomWords                        | 887             | 8549  | 1296   | 23465 | 3       |
-| requestRandomNumber                          | 28317           | 28317 | 28317  | 28317 | 1       |
-
-
-| src/staking/StakedTokenLock.sol:StakedTokenLock contract |                 |       |        |       |         |
-|----------------------------------------------------------|-----------------|-------|--------|-------|---------|
-| Deployment Cost                                          | Deployment Size |       |        |       |         |
-| 464921                                                   | 2815            |       |        |       |         |
-| Function Name                                            | min             | avg   | median | max   | # calls |
-| deposit                                                  | 2518            | 33452 | 42286  | 42286 | 9       |
-| getReward                                                | 21656           | 21656 | 21656  | 21656 | 1       |
-| withdraw                                                 | 576             | 13443 | 19377  | 19443 | 6       |
-
-
-| src/staking/Staking.sol:Staking contract |                 |        |        |        |         |
-|------------------------------------------|-----------------|--------|--------|--------|---------|
-| Deployment Cost                          | Deployment Size |        |        |        |         |
-| 1172322                                  | 6985            |        |        |        |         |
-| Function Name                            | min             | avg    | median | max    | # calls |
-| approve                                  | 24692           | 24692  | 24692  | 24692  | 1       |
-| earned                                   | 3690            | 3690   | 3690   | 3690   | 5       |
-| exit                                     | 157796          | 157796 | 157796 | 157796 | 1       |
-| getReward                                | 7580            | 76171  | 68691  | 132371 | 7       |
-| stake                                    | 396             | 67433  | 72369  | 83676  | 10      |
-| transfer                                 | 123096          | 123096 | 123096 | 123096 | 1       |
-| transferFrom                             | 116566          | 116566 | 116566 | 116566 | 1       |
-| withdraw                                 | 308             | 14594  | 14594  | 28880  | 2       |
 
 
 
@@ -524,6 +519,7 @@ If the functions are required by an interface, the contract should inherit from 
 
 There are 3 instances of this issue:
 
+``` solidity
 LotterySetup.sol
 160:     function _baseJackpot(uint256 _initialPot) internal view returns (uint256) {
 161:         return Math.min(_initialPot.getPercentage(BASE_JACKPOT_PERCENTAGE), jackpotBound);
@@ -539,7 +535,7 @@ ReferralSystem.sol
 161:     function referrerRewardsPerDraw(uint128 drawId) internal view returns (uint256 rewards) {
 162:         return rewardsToReferrersPerDraw[Math.min(rewardsToReferrersPerDraw.length - 1, drawId)];
 163:     }
-
+```
 
 ## [G-09] State variables can be packed into fewer storage slots 
 
@@ -550,9 +546,7 @@ There are 1 instances of this issue:
 | src/Lottery.sol:Lottery contract |                 |        |        |        |         |
 |----------------------------------|-----------------|--------|--------|--------|---------|
 | Deployment Cost                  | Deployment Size |        |        |        |         |
-| 8216201                          | 38996           |        |        |        |         |
-| Function Name                    | min             | avg    | median | max    | # calls |
-+| onRandomNumberFulfilled          | 74214           | 106163 | 100727 | 202043 | 112     |
++| 8216201                          | 38996           |        |        |        |         |
 ```
 
 ``` diff
@@ -572,4 +566,77 @@ Lottery.sol
 32: 
 -33:    bool public override drawExecutionInProgress;
 34:     uint128 public override currentDraw;
+```
+
+## [G-10] x = x + y is cheaper than x += y;
+There are 1 instances of this issue :
+
+``` solidity
+StakedTokenLock.sol
+30:         depositedBalance += amount;
+```
+
+## [G-11] Usage of uints/ints smaller than 32 bytes (256 bits) incurs overhead
+When using elements that are smaller than 32 bytes, your contract’s gas usage may be higher. This is because the EVM operates on 32 bytes at a time. Therefore, if the element is smaller than that, the EVM must use more operations in order to reduce the size of the element from 32 bytes to the desired size.
+
+https://docs.soliditylang.org/en/v0.8.11/internals/layout_in_storage.html
+Use a larger size then downcast where needed
+
+
+## [G-12] Using > 0 costs more gas than != 0 when used on a uint in a require() statement
+
+The optimization works until solidity version 0.8.13 where there is a regression in gas costs.
+
+There are 2 instances of this issue:
+
+``` solidity
+Lottery.sol
+269:         if (claimedAmount == 0) {
+270:             revert NothingToClaim(ticketId);
+271:         }
+
+LotterySetup.sol
+133:         if (initialPot > 0) {
+134:             revert JackpotAlreadyInitialized();
+135:         }
+147:        assert(initialPot > 0);
+```
+
+
+## [G-13] >= costs less gas than >
+
+The compiler uses opcodes GT and ISZERO for solidity code that uses >, but only requires LT for >=
+
+There are 5 instances of this issue:
+
+``` solidity
+LotteryMath.sol
+67:       excessPot = excessPotInt > 0 ? uint256(excessPotInt) : 0;
+85:         if (excessPot > 0 && ticketsSold > 0) {
+86:             bonusMulti += (excessPot * EXCESS_BONUS_ALLOCATION) / (ticketsSold * expectedPayout);
+87:         }
+85:         if (excessPot > 0 && ticketsSold > 0) {
+86:             bonusMulti += (excessPot * EXCESS_BONUS_ALLOCATION) / (ticketsSold * expectedPayout);
+87:         }
+LotterySetup.sol
+114:         if (block.timestamp > ticketRegistrationDeadline(drawId)) {
+115:             revert TicketRegistrationClosed(drawId);
+116:         }
+RNSourceController.sol
+27:         if (_maxFailedAttempts > MAX_MAX_FAILED_ATTEMPTS) {
+28:             revert MaxFailedAttemptsTooBig();
+29:         }
+30:         if (_maxRequestDelay > MAX_REQUEST_DELAY) {
+31:             revert MaxRequestDelayTooBig();
+32:         }
+StakedTokenLock.sol
+26:        if (block.timestamp > depositDeadline) {
+27:             revert DepositPeriodOver();
+28:         }
+29: 
+StakedTokenLock.sol
+39:        if (block.timestamp > depositDeadline && block.timestamp < depositDeadline + lockDuration) {
+40:             revert LockPeriodOngoing();
+41:         }
+42: 
 ```
