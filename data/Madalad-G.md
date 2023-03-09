@@ -16,7 +16,7 @@
 |[G-13]|`++i` costs less gas than `i++`|7|
 
 &nbsp;
-Total issues found: 13
+Total issues: 13
 Total instances: 89
 &nbsp;
 # Gas Optimizations
