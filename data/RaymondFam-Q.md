@@ -76,3 +76,34 @@ For instance, the following `fixedReward()` may be refactored as follows:
     }
 
 ```
+## Comment and code mismatch
+The following comment on the event param of `rewardType` should be refactored as follows:
+
+[File: ILottery.sol#L72](https://github.com/code-423n4/2023-03-wenwin/blob/main/src/interfaces/ILottery.sol#L72)
+
+```diff
+-    /// @param rewardType 0 - staking reward, 1 - frontend reward.
++    /// @param rewardType 0 - frontend reward, 1 - staking reward.
+```
+## Use `continue` in lieu of reverting logic in for loop
+Function logic with reverting error entailed in its for loop should use `continue` instead to avoid unnecessary DoS particularly when it involves a large array that only fails towards the end of the iterations.
+
+For instance, considering looking into refactoring [`claimWinningTicket()`](https://github.com/code-423n4/2023-03-wenwin/blob/main/src/Lottery.sol#L170-L176) and [`claimWinningTickets()`](https://github.com/code-423n4/2023-03-wenwin/blob/main/src/Lottery.sol#L263) in Lottery.sol where the latter when reverted in the for loop is going to grieve the user after spending a sizeable amount of gas calling the former.
+
+## Non-compliant contract layout with Solidity's Style Guide
+According to Solidity's Style Guide below:
+
+https://docs.soliditylang.org/en/v0.8.17/style-guide.html
+
+In order to help readers identify which functions they can call, and find the constructor and fallback definitions more easily, functions should be grouped according to their visibility and ordered in the following manner:
+
+constructor, receive function (if exists), fallback function (if exists), external, public, internal, private
+
+And, within a grouping, place the `view` and `pure` functions last.
+
+Additionally, inside each contract, library or interface, use the following order:
+
+type declarations, state variables, events, modifiers, functions
+
+Consider adhering to the above guidelines for all contract instances entailed.
+
