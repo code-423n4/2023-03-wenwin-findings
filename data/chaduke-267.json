@@ -1,0 +1,8 @@
+{
+  "contest": 218,
+  "handle": "chaduke",
+  "risk": "2",
+  "title": "calculateNewProfit() does not calculate the newProfit correctly",
+  "issueId": 267,
+  "issueUrl": "https://github.com/code-423n4/2023-03-wenwin-findings/issues/267"
+}
