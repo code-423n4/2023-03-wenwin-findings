@@ -1,0 +1,8 @@
+{
+  "contest": 218,
+  "handle": "Kaiziron",
+  "risk": "2",
+  "title": "Frontend operators may not receive their reward, but a malicious user will receive the frontend operator reward instead",
+  "issueId": 480,
+  "issueUrl": "https://github.com/code-423n4/2023-03-wenwin-findings/issues/480"
+}
