@@ -125,6 +125,38 @@ https://github.com/code-423n4/2023-03-wenwin/blob/main/src/ReferralSystem.sol#L1
 File: Staking.sol | Line: 94 | if (reward > 0) {
 https://github.com/code-423n4/2023-03-wenwin/blob/main/src/staking/Staking.sol#L94
 
+## 5. x = x + y is cheaper than x += y
+
+The use of x = x + y instead of x += y can result in gas savings, particularly when working with larger variables or when the operation is performed multiple times. This is because the Solidity compiler can optimize the code to reduce the number of operations and save gas costs.
+
+File: Lottery.sol | Line: 129 | frontendDueTicketSales[frontend] += tickets.length;
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/Lottery.sol#L129
+File: Lottery.sol | Line: 173 | claimedAmount += claimWinningTicket(ticketIds[i]);
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/Lottery.sol#L173
+File: Lottery.sol | Line: 275 | currentNetProfit += int256(unclaimedJackpotTickets * winAmount[drawId][selectionSize]);
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/Lottery.sol#L275
+File: LotteryMath.sol | Line: 84 | bonusMulti += (excessPot * EXCESS_BONUS_ALLOCATION) / (ticketsSold * expectedPayout);
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotteryMath.sol#L84
+File: ReferralSystem.sol | Line: 64 | totalTicketsForReferrersPerDraw[currentDraw] +=
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/ReferralSystem.sol#L64
+File: ReferralSystem.sol | Line: 67 | totalTicketsForReferrersPerDraw[currentDraw] += numberOfTickets;
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/ReferralSystem.sol#L67
+File: ReferralSystem.sol | Line: 69 | unclaimedTickets[currentDraw][referrer].referrerTicketCount += uint128(numberOfTickets);
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/ReferralSystem.sol#L69
+File: ReferralSystem.sol | Line: 71 | unclaimedTickets[currentDraw][player].playerTicketCount += uint128(numberOfTickets);
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/ReferralSystem.sol#L71
+File: ReferralSystem.sol | Line: 78 | claimedReward += claimPerDraw(drawIds[counter]);
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/ReferralSystem.sol#L78
+File: ReferralSystem.sol | Line: 147 | claimedReward += playerRewardsPerDrawForOneTicket[drawId] * _unclaimedTickets.playerTicketCount;
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/ReferralSystem.sol#L147
+File: StakedTokenLock.sol | Line: 30 | depositedBalance += amount;
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/staking/StakedTokenLock.sol#L30
+File: TicketUtils.sol | Line: 29 | ticketSize += (ticket & uint256(1));
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/TicketUtils.sol#L29
+File: TicketUtils.sol | Line: 96 | winTier += uint8(intersection & uint120(1));
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/TicketUtils.sol#L96
+
+
 
 
 
