@@ -17,7 +17,7 @@
 | [GAS&#x2011;12](#GAS&#x2011;12) | `require()` Should Be Used Instead Of `assert()` | 2 | - |
 | [GAS&#x2011;13](#GAS&#x2011;13) | Shorten the array rather than copying to a new one | 2 | - |
 | [GAS&#x2011;14](#GAS&#x2011;14) | Help The Optimizer By Saving A Storage Variable’s Reference Instead Of Repeatedly Fetching It | 3 | - |
-| [GAS&#x2011;15](#GAS&#x2011;15) | Structs can be packed into fewer storage slots | 2 | 4000 |
+| [GAS&#x2011;15](#GAS&#x2011;15) | Structs can be packed into fewer storage slots | 4 | 8000 |
 | [GAS&#x2011;16](#GAS&#x2011;16) | Usage of `uints`/`ints` smaller than 32 bytes (256 bits) incurs overhead | 21 | - |
 | [GAS&#x2011;17](#GAS&#x2011;17) | Unnecessary look up in `if` condition | 1 | 2100 |
 | [GAS&#x2011;18](#GAS&#x2011;18) | Use solidity version 0.8.19 to gain some gas boost | 3 | 264 |
@@ -750,7 +750,7 @@ Each slot saved can avoid an extra Gsset (20000 gas) for the first setting of th
 
 ```
 
-https://github.com/code-423n4/2023-03-wenwin/tree/main/src/interfaces/ILotterySetup.sol#L63
+https://github.com/code-423n4/2023-03-wenwin/tree/main/src/interfaces/ILotterySetup.sol#L63-L78
 
 Can save 1 storage slot by changing to:
 
@@ -783,6 +783,31 @@ Can save an additional storage slot if `ticketPrice` and `expectedPayout` can be
 ```
 
 
+In addition for the following structs, these can be changed from `uint256` to `uint64` as it is unlikely for it to reach timestamp the max value of `uint256`
+```solidity
+struct LotteryDrawSchedule {
+    /// @dev First draw is scheduled to take place at this timestamp
+    uint256 firstDrawScheduledAt;
+    /// @dev Period for running lottery
+    uint256 drawPeriod;
+    /// @dev Cooldown period when users cannot register tickets for draw anymore
+    uint256 drawCoolDownPeriod;
+}
+```
+
+Can save 2 storage slots by changing to:
+```solidity
+struct LotteryDrawSchedule {
+    /// @dev First draw is scheduled to take place at this timestamp
+    uint64 firstDrawScheduledAt;
+    /// @dev Period for running lottery
+    uint64 drawPeriod;
+    /// @dev Cooldown period when users cannot register tickets for draw anymore
+    uint64 drawCoolDownPeriod;
+}
+```
+
+https://github.com/code-423n4/2023-03-wenwin/tree/main/src/interfaces/ILotterySetup.sol#L53-L60
 
 
 
