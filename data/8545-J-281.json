@@ -1,0 +1,8 @@
+{
+  "contest": 218,
+  "handle": "8545-J",
+  "risk": "3",
+  "title": "Owner can maliciously cause the oracle to not return a number, thereby bypassing restrictions on the owner changing the randomness source",
+  "issueId": 281,
+  "issueUrl": "https://github.com/code-423n4/2023-03-wenwin-findings/issues/281"
+}
