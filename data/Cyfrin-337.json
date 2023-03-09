@@ -1,0 +1,8 @@
+{
+  "contest": 218,
+  "handle": "Cyfrin",
+  "risk": "2",
+  "title": "We don't need to wait for `maxRequestDelay` to retry if `source.requestRandomNumber()` reverts",
+  "issueId": 337,
+  "issueUrl": "https://github.com/code-423n4/2023-03-wenwin-findings/issues/337"
+}
