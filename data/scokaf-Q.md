@@ -264,3 +264,32 @@ Vulnerability details
 \- uint256 private constant MAX_REQUEST_DELAY = 5 hours;
 \+ uint256 private constant MAX_REQUEST_DELAY = 5 hours; // 18_000 (5 * 60 * 60)
 
+# 8: FUNCTION WRITING THAT DOES NOT COMPLY WITH THE SOLIDITY STYLE GUIDE
+
+Vulnerability details
+
+## Context:
+
+All Contracts
+
+Order of Functions; ordering helps readers identify which functions they can call and to find the constructor and fallback definitions easier. But there are contracts in the project that do not comply with this.
+
+For reference, see https://docs.soliditylang.org/en/v0.8.19/style-guide.html
+
+## Proof of Concept
+
+Functions should be grouped according to their visibility and ordered:
+
+-constructor
+-receive function (if exists)
+-fallback function (if exists)
+-external
+-public
+-internal
+-private
+-within a grouping, place the view and pure functions last
+
+
+### Tools Used
+
+Manual Analysis
