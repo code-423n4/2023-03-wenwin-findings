@@ -28,8 +28,9 @@ Total: 30 contexts over 8 issues
 | [NC&#x2011;9](#NC&#x2011;9) | Use a more recent version of Solidity | 3 |
 | [NC&#x2011;10](#NC&#x2011;10) | Public Functions Not Called By The Contract Should Be Declared External Instead | 1 |
 | [NC&#x2011;11](#NC&#x2011;11) | Empty blocks should be removed or emit something | 1 |
+| [NC&#x2011;12](#NC&#x2011;12) | Project should implement `pausable` functionality | 1 |
 
-Total: 56 contexts over 11 issues
+Total: 57 contexts over 12 issues
 
 ## Low Risk Issues
 
@@ -800,4 +801,8 @@ https://github.com/code-423n4/2023-03-wenwin/tree/main/src/Ticket.sol#L17
 
 
 
+### <a href="#Summary">[NC&#x2011;12]</a><a name="NC&#x2011;12"> Project should implement `pausable` functionality
 
+The project should implement a pausing function to allow pausing should an critical issues be discovered, hence pausing any changes that would happen until a fix has been implemented.
+
+See OZ's Pausable contract for more information: https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/security/Pausable.sol
