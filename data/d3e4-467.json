@@ -1,0 +1,8 @@
+{
+  "contest": 218,
+  "handle": "d3e4",
+  "risk": "2",
+  "title": "`drawCoolDownPeriod` of 0 may allow frontrunning the draw with a winning ticket purchase",
+  "issueId": 467,
+  "issueUrl": "https://github.com/code-423n4/2023-03-wenwin-findings/issues/467"
+}
