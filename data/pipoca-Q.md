@@ -22,7 +22,7 @@ https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotterySetup.sol#L128
 File: LotterySetup.sol | Line: 168 | uint256 divisor = 10 ** (IERC20Metadata(address(rewardToken)).decimals() - 1);
 https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotterySetup.sol#L168
 
-## 3  Use constants instead of immutable variables
+## 3.  Use constants instead of immutable variables, and when correctly used, uppercase variable name.
 
 It is recommended to define variables as constants if they are not defined at contract creation. In certain cases, it may be beneficial to move immutable variables to the constructor, as shown in this example: https://github.com/code-423n4/2023-03-wenwin/blob/main/src/VRFv2RNSource.sol#L11. Additionally, any immutable variable established at contract creation within a constructor should be written in uppercase letters for better readability.
 
