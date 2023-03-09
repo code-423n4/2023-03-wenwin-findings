@@ -1,5 +1,3 @@
-That's the single worth GAS optimization I found which was not listed in the known issues. I made the changed already, tests are happy and GAS reduced.
-
 ```diff
 diff --git a/src/ReferralSystem.sol b/src/ReferralSystem.sol
 index d74ced7..74dad6f 100644
@@ -27,4 +25,17 @@ index d74ced7..74dad6f 100644
          }
          unclaimedTickets[currentDraw][player].playerTicketCount += uint128(numberOfTickets);
      }
+```
+
+```diff
+diff --git a/src/Lottery.sol b/src/Lottery.sol
+index 28d3477..dc0af26 100644
+--- a/src/Lottery.sol
++++ b/src/Lottery.sol
+@@ -104,7 +104,7 @@ contract Lottery is ILottery, Ticket, LotterySetup, ReferralSystem, RNSourceCont
+             )
+         );
+
+-        nativeToken.safeTransfer(msg.sender, ILotteryToken(address(nativeToken)).INITIAL_SUPPLY());
++        nativeToken.safeTransfer(msg.sender, ILotteryToken(address(nativeToken)).INITIAL_SUPPLY()); //@audit (GAS) This seems useless as when creating the native token you already mint the initial supply to the msg.sender
 ```
