@@ -1,0 +1,8 @@
+{
+  "contest": 218,
+  "handle": "0xfuje",
+  "risk": "2",
+  "title": "Compromised owner can set up RNSource and set winning number to steal the jackpot",
+  "issueId": 314,
+  "issueUrl": "https://github.com/code-423n4/2023-03-wenwin-findings/issues/314"
+}
