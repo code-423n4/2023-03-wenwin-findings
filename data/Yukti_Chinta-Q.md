@@ -26,11 +26,12 @@ This will let the team grow in a linear way with the rest of the users.
 
 ### 2. <ins>unsafe revert in `fulfillRandomWords` function</ins>
 
-[fulfillRandomWords]() function in `VRFv2RNSource.sol` has an unsafe revert which can make the whole thing stuck. This function must never revert otherwise it will not get called again and the whole thing will get stuck.
+[fulfillRandomWords]() function in `VRFv2RNSource.sol` has an unsafe revert which can make the whole lottery system stuck.
+According to Chainlink security guidelines, this function must never revert, as once called it will not get called again. So a revert will totally brick the system and lead to massive loss of funds.
 
 Reference - https://docs.chain.link/vrf/v2/security/#fulfillrandomwords-must-not-revert
 
-Though the chances of this happening is low, its recommended to just use the first word instead of reverting if there are multiple words.
+Though you shouldn't receive more than one word from Chainlink, we recommended to just use the first word instead of reverting if there are multiple words.
 
 ### 3. <ins>Mismatch between documentation and smart contract in `getMinimumEligibleReferralsFactorCalculation` function</ins>
 
@@ -40,8 +41,7 @@ The [doc](https://docs.wenwin.com/wenwin-lottery/protocol-architecture/token/rew
 
 ### 4. <ins>Wrong formula for calculating Excess Pot</ins>
 
-[calculateExcessPot](https://github.com/code-423n4/2023-03-wenwin/blob/91b89482aaedf8b8feb73c771d11c257eed997e8/src/LotteryMath.sol#L62-L66) function in `LotteryMath` uses the wrong formula for calculating Excess Pot. This will result in major discrepancies between documentation and smart contract logic.
-
+[calculateExcessPot](https://github.com/code-423n4/2023-03-wenwin/blob/91b89482aaedf8b8feb73c771d11c257eed997e8/src/LotteryMath.sol#L62-L66) function in `LotteryMath` uses a somewhat different formula for calculating the Excess Pot than the one in the documentation does. This will result in discrepancies if not set up correctly.
 ```solidity
     function calculateExcessPot(int256 netProfit, uint256 fixedJackpotSize) internal pure returns (uint256 excessPot) {
         int256 excessPotInt = netProfit.getPercentageInt(SAFETY_MARGIN);
@@ -71,14 +71,14 @@ But this is not implemented in the code correctly. The time period is a bit less
 
 The `ticketRegistrationDeadline` function returns `firstDrawSchedule + (drawId * drawPeriod) - drawCoolDownPeriod;`. 
 
-Assuming each draw lasts for 7 days and 52 draws per year, this contributes to 7*52 = 360 days. Which is at least 5 days less than an year. Further, the `drawCoolDownPeriod` is subtracted from the timestamp, which means deadline for claiming the winning tickets, end at least drawCoolDownPeriod before 1 year period. 
+Assuming each draw lasts for 7 days and 52 draws per year, this contributes to 7*52 = 360 days. Which is at least 5 days less than an year. Further, **the `drawCoolDownPeriod` is subtracted from the timestamp**, which means deadline for claiming the winning tickets, end at least drawCoolDownPeriod before 1 year period. 
 
 It is recommended to mention this fact in the doc for transparency. Or the code could be modified from:
 ` if (block.timestamp <= ticketRegistrationDeadline(ticketInfo.drawId + LotteryMath.DRAWS_PER_YEAR)) {`
 
 to
 
-` if (block.timestamp <= ticketRegistrationDeadline(ticketInfo.drawId) + 1 year) {`
+` if (block.timestamp <= drawScheduledAt(ticketInfo.drawId) + 1 year) {`
 
 ### 6. <ins>The first draw should start only after the 200 million team tokens are staked and locked for 1 year</ins>
 
