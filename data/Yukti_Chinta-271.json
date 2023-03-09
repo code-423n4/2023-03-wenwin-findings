@@ -1,0 +1,8 @@
+{
+  "contest": 218,
+  "handle": "Yukti_Chinta",
+  "risk": "3",
+  "title": "If minInitialPot is set too high, user funds might not be enough to finalize the Pot and funds will be stuck in the contract",
+  "issueId": 271,
+  "issueUrl": "https://github.com/code-423n4/2023-03-wenwin-findings/issues/271"
+}
