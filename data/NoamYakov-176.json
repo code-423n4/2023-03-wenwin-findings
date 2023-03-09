@@ -1,0 +1,8 @@
+{
+  "contest": 218,
+  "handle": "NoamYakov",
+  "risk": "2",
+  "title": "A `Lottery` contract can't be created without waiting 2 times the `drawPeriod` before the `firstDrawSchedule`",
+  "issueId": 176,
+  "issueUrl": "https://github.com/code-423n4/2023-03-wenwin-findings/issues/176"
+}
