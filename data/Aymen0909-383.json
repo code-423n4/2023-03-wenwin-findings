@@ -1,0 +1,8 @@
+{
+  "contest": 218,
+  "handle": "Aymen0909",
+  "risk": "3",
+  "title": "`calculateExcessPot` must use `(1 - SAFETY_MARGIN)` instead of `SAFETY_MARGIN`",
+  "issueId": 383,
+  "issueUrl": "https://github.com/code-423n4/2023-03-wenwin-findings/issues/383"
+}
