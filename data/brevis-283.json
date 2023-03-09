@@ -1,0 +1,8 @@
+{
+  "contest": 218,
+  "handle": "brevis",
+  "risk": "2",
+  "title": "Griefing attack / risk on claimWinningTickets and claimWinningTicket logic",
+  "issueId": 283,
+  "issueUrl": "https://github.com/code-423n4/2023-03-wenwin-findings/issues/283"
+}
