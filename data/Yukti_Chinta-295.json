@@ -1,0 +1,8 @@
+{
+  "contest": 218,
+  "handle": "Yukti_Chinta",
+  "risk": "3",
+  "title": "Malicious user can steal rewardTokens by staking, getting rewards and then unstaking in the same block",
+  "issueId": 295,
+  "issueUrl": "https://github.com/code-423n4/2023-03-wenwin-findings/issues/295"
+}
