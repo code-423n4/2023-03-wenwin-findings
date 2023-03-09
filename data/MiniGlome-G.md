@@ -6,6 +6,7 @@
 | [GAS-03] | Use `<`/`>` instead of `>=`/`>=` | 1 | 
 | [GAS-04] | Using fixed bytes is cheaper than using `string` | 3 | 
 | [GAS-05] | `<x> += <y>` Costs More Gas Than `<x> = <x> + <y>` For State Variables | 8 | 
+| [GAS-06] | Unused named return variables | 10 | 
 
 ### [GAS-01] Setting the `constructor` to `payable`
 Saves ~13 gas per instance
@@ -296,4 +297,49 @@ File: Wenwin\staking\StakedTokenLock.sol
 43:        depositedBalance -= amount;
 
 ```
+
+### [GAS-06] Unused named return variables
+Not using the named return variables when function returns, wastes deployment gas
+
+*Instances (10)*:
+```solidity
+File: LotterySetup.sol
+
+L122: return _baseJackpot(initialPot);
+
+L124: return 0;
+
+L128: return extracted * (10 ** (IERC20Metadata(address(rewardToken)).decimals() - 1));
+```
+
+```solidity
+File: Lottery.sol
+
+L234: function currentRewardSize(uint8 winTier) public view override returns (uint256 rewardSize) {
+        return drawRewardSize(currentDraw, winTier);
+    }
+
+L239: function drawRewardSize(uint128 drawId, uint8 winTier) private view returns (uint256 rewardSize) {
+        return LotteryMath.calculateReward(
+```
+
+```solidity
+File: ReferralSystem.sol
+
+L158: return playerRewardFirstDraw > decrease ? (playerRewardFirstDraw - decrease) : 0;
+
+L162: return rewardsToReferrersPerDraw[Math.min(rewardsToReferrersPerDraw.length - 1, drawId)];
+```
+
+```solidity
+File: Staking.sol
+
+L51: return rewardPerTokenStored;
+
+L58: return rewardPerTokenStored + (unclaimedRewards * 1e18 / _totalSupply);
+
+L62: return balanceOf(account) * (rewardPerToken() - userRewardPerTokenPaid[account]) / 1e18 + rewards[account];
+```
+
+
 
