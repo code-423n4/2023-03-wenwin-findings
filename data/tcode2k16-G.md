@@ -1,0 +1,1 @@
+The `isValidTicket` function can be optimized using an algorithm similar to https://web.archive.org/web/20151229003112/http://blogs.msdn.com/b/jeuge/archive/2005/06/08/hakmem-bit-count.aspx in order to save gas 
