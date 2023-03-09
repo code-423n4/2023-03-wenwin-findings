@@ -1,0 +1,8 @@
+{
+  "contest": 218,
+  "handle": "0xkazim",
+  "risk": "2",
+  "title": "Unhandled return values of transfer and transferFrom",
+  "issueId": 278,
+  "issueUrl": "https://github.com/code-423n4/2023-03-wenwin-findings/issues/278"
+}
