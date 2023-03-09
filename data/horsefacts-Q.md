@@ -85,7 +85,7 @@ import "src/LotteryMath.sol";
 
 ### `TicketUtils`: Comment typo
 
-There's a small comment typo in []`TicketUtils`](https://github.com/code-423n4/2023-03-wenwin/blob/91b89482aaedf8b8feb73c771d11c257eed997e8/src/TicketUtils.sol#L16-L17):
+There's a small comment typo in [`TicketUtils`](https://github.com/code-423n4/2023-03-wenwin/blob/91b89482aaedf8b8feb73c771d11c257eed997e8/src/TicketUtils.sol#L16-L17):
 
 ```solidity
     /// @return isValid Is ticked valid
