@@ -1,0 +1,8 @@
+{
+  "contest": 218,
+  "handle": "zaskoh",
+  "risk": "2",
+  "title": "Fixed multiplicator for minInitialPot and jackpotBound can exclude tokens",
+  "issueId": 440,
+  "issueUrl": "https://github.com/code-423n4/2023-03-wenwin-findings/issues/440"
+}
