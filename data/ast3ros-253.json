@@ -1,0 +1,8 @@
+{
+  "contest": 218,
+  "handle": "ast3ros",
+  "risk": "2",
+  "title": "[M-2] The Initial Pot Raise can be finalized by anyone, which can stop the funding process.",
+  "issueId": 253,
+  "issueUrl": "https://github.com/code-423n4/2023-03-wenwin-findings/issues/253"
+}
