@@ -1,0 +1,8 @@
+{
+  "contest": 218,
+  "handle": "yongskiws",
+  "risk": "2",
+  "title": "`referralRegisterTickets` there is an inaccurate calculation of the total number of tickets for referrers",
+  "issueId": 409,
+  "issueUrl": "https://github.com/code-423n4/2023-03-wenwin-findings/issues/409"
+}
