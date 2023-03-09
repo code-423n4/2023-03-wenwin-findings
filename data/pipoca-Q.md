@@ -24,7 +24,9 @@ https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotterySetup.sol#L168
 
 ## 3.  Use constants instead of immutable variables, and when correctly used, uppercase variable name.
 
-It is recommended to define variables as constants if they are not defined at contract creation. In certain cases, it may be beneficial to move immutable variables to the constructor, as shown in this example: https://github.com/code-423n4/2023-03-wenwin/blob/main/src/VRFv2RNSource.sol#L11. Additionally, any immutable variable established at contract creation within a constructor should be written in uppercase letters for better readability.
+It is recommended to define variables as constants if they are not defined at contract creation. In certain cases, it may be beneficial to move immutable variables to the constructor, as shown in this example: https://github.com/code-423n4/2023-03-wenwin/blob/main/src/VRFv2RNSource.sol#L11. 
+
+Additionally, any immutable variable established at contract creation within a constructor should be written in uppercase letters for better readability (see https://github.com/code-423n4/2023-03-wenwin/blob/main/src/LotteryToken.sol#L17 as an example)
 
 File: Lottery.sol | Line: 29 | address public immutable override stakingRewardRecipient;
 https://github.com/code-423n4/2023-03-wenwin/blob/main/src/Lottery.sol#L29
@@ -239,6 +241,12 @@ https://github.com/code-423n4/2023-03-wenwin/blob/main/src/TicketUtils.sol#L69
 File: VRFv2RNSource.sol | Line: 33 | if (randomWords.length != 1) {
 https://github.com/code-423n4/2023-03-wenwin/blob/main/src/VRFv2RNSource.sol#L33
 
+## 5. Best practices for initializing ERC721 token contract and emitting successful deployment event
+
+The constructor function's code block may be left empty if the ERC721 constructor is called with the appropriate arguments. This will ensure that the ERC721 token operates correctly by performing all necessary initializations. Nonetheless, it is generally advisable to emit an event after the ERC721 constructor has been called to indicate that the contract has been successfully deployed.
+
+File: Ticket.sol | Line: 17 | constructor() ERC721("Wenwin Lottery Ticket", "WLT") { }
+https://github.com/code-423n4/2023-03-wenwin/blob/main/src/Ticket.sol#L17
 
 
 
