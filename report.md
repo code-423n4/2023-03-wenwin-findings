@@ -58,7 +58,7 @@ During the audit contest outlined in this document, C4 conducted an analysis of 
   35. SunSec
   36. [Udsen](https://github.com/udsene)
   37. UniversalCrypto (amaechieth and tettehnetworks)
-  38. Yukti_Chinta ([kenzo](https://twitter.com/KenzoAgada) and [ElKu](https://twitter.com/ElKu_crypto))
+  38. Yukti\_Chinta ([kenzo](https://twitter.com/KenzoAgada) and [ElKu](https://twitter.com/ElKu_crypto))
   39. [adriro](https://twitter.com/adrianromero)
   40. air
   41. alexxander
